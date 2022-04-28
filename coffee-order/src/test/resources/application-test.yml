@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test_coffe_order
+    username: test
+    password: test1234!
