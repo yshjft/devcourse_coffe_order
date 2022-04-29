@@ -18,7 +18,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'com.wix.wix-embedded-mysql:4.6.1'
+	testImplementation 'com.wix:wix-embedded-mysql:4.6.1'
 }
 
 tasks.named('test') {

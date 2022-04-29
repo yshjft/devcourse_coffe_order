@@ -1,5 +1,5 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test_coffe_order
+    url: jdbc:mysql://localhost:2215/test_coffee_order
     username: test
     password: test1234!
