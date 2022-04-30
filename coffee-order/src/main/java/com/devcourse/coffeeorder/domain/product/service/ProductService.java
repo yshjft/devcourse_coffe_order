@@ -93,8 +93,10 @@ public class ProductService {
     }
 
     // delete
-    public void deleteProduct(UUID productId) {
+    public UUID deleteProduct(UUID productId) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId.toString()));
         productRepository.delete(product);
+
+        return productId;
     }
 }

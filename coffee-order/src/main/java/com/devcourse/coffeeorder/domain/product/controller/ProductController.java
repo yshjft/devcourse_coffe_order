@@ -1,5 +1,7 @@
 package com.devcourse.coffeeorder.domain.product.controller;
 
+import java.util.UUID;
+
 import com.devcourse.coffeeorder.domain.product.dto.ProductReqDto;
 import com.devcourse.coffeeorder.domain.product.dto.ProductResDto;
 import com.devcourse.coffeeorder.domain.product.dto.ProductsResDto;
@@ -8,8 +10,6 @@ import com.devcourse.coffeeorder.domain.product.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @Controller
 public class ProductController {
