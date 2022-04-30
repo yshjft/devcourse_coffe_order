@@ -7,13 +7,13 @@ import com.devcourse.coffeeorder.global.exception.WrongInputException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class ProductCreateReqDto {
+public class ProductReqDto {
     private String productName;
     private Category category;
     private long price;
     private String description;
 
-    public ProductCreateReqDto(String productName, Category category, long price, String description) {
+    public ProductReqDto(String productName, Category category, long price, String description) {
         if(productName == null || productName.equals("")) {
             throw new WrongInputException("productName is required property!");
         }
@@ -30,6 +30,41 @@ public class ProductCreateReqDto {
         this.category = category;
         this.price = price;
         this.description = description;
+    }
+
+    public static ProductReqDtoBuilder builder() {
+        return new ProductReqDtoBuilder();
+    }
+
+    public static class ProductReqDtoBuilder {
+        private String productName;
+        private Category category;
+        private long price;
+        private String description;
+
+        public ProductReqDtoBuilder productName(String productName) {
+            this.productName = productName;
+            return this;
+        }
+
+        public ProductReqDtoBuilder category(Category category) {
+            this.category = category;
+            return this;
+        }
+
+        public ProductReqDtoBuilder price(long price) {
+            this.price = price;
+            return this;
+        }
+
+        public ProductReqDtoBuilder description (String description) {
+            this.description = description;
+            return this;
+        }
+
+        public ProductReqDto build() {
+            return new ProductReqDto(productName, category, price, description);
+        }
     }
 
     public String getProductName() {

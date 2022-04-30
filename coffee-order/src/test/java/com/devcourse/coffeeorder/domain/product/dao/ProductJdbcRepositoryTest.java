@@ -118,7 +118,7 @@ class ProductJdbcRepositoryTest {
         Optional<Product> retrieved = productRepository.findById(product.getProductId());
         Product retrievedProduct = retrieved.get();
 
-        retrievedProduct.updatePrice(5000);
+        retrievedProduct.updateProduct(retrievedProduct.getProductName(), retrievedProduct.getCategory(), 5000, retrievedProduct.getDescription());
         productRepository.update(retrievedProduct);
 
         retrieved = productRepository.findById(product.getProductId());

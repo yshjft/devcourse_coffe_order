@@ -14,9 +14,16 @@
 <h1 class="header">Coffee Order Admin</h1>
 <div class="container-fluid">
     <h3>상품 목록</h3>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a th:href="@{/products/new}" class="btn btn-primary me-md-2" type="button">상품 등록</a>
-<!--        <a th:href="@{/vouchers/new}" class="btn btn-primary me-md-2" type="button">바우처 생성</a>-->
+    <div class="row">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+            <div class="d-flex justify-content-start">
+                <a th:href="@{/products}" class="btn btn-outline-primary me-md-2" type="button">ALL</a>
+                <a th:each="category : ${categories}"
+                   th:href="@{'/products?category='+${category}}"
+                   th:text="${category}" class="btn btn-outline-primary me-md-2" type="button"></a>
+            </div>
+            <a th:href="@{/products/new}"  class="btn btn-primary me-md-2" type="button">상품 등록</a>
+        </div>
     </div>
     <table class="table table-hover">
         <thead>

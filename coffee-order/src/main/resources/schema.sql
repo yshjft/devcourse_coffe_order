@@ -32,5 +32,5 @@ CREATE TABLE order_items
     updated_at datetime(6) DEFAULT NULL,
     INDEX (order_id),
     CONSTRAINT fk_order_items_to_order FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE,
-    CONSTRAINT fk_order_items_to_product FOREIGN KEY (product_id) REFERENCES products (product_id)
+    CONSTRAINT fk_order_items_to_product FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
 );

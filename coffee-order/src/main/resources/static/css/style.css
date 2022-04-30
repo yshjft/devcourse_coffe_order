@@ -7,3 +7,7 @@
 .service-description {
     margin-bottom: 10px;
 }
+
+.btn-area {
+    display: flex;
+}

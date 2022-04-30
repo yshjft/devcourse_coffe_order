@@ -1,18 +1,20 @@
-package com.devcourse.coffeeorder.domain.product.entity;
+package com.devcourse.coffeeorder.domain.product.dto;
+
+import com.devcourse.coffeeorder.domain.product.entity.Category;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Product {
-    private final UUID productId;
+public class ProductDetailResDto {
+    private UUID productId;
     private String productName;
     private Category category;
     private long price;
     private String description;
-    private final LocalDateTime createdAt;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Product(UUID productId, String productName, Category category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ProductDetailResDto(UUID productId, String productName, Category category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.productId = productId;
         this.productName = productName;
         this.category = category;
@@ -22,11 +24,11 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public static ProductBuilder builder() {
-        return new ProductBuilder();
+    public static ProductDetailResDtoBuilder builder() {
+        return new ProductDetailResDtoBuilder();
     }
 
-    public static class ProductBuilder {
+    public static class ProductDetailResDtoBuilder {
         private UUID productId;
         private String productName;
         private Category category;
@@ -35,46 +37,45 @@ public class Product {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
-        public ProductBuilder productId(UUID productId) {
+        public ProductDetailResDtoBuilder productId(UUID productId) {
             this.productId = productId;
             return this;
         }
 
-        public ProductBuilder productName(String productName) {
+        public ProductDetailResDtoBuilder productName(String productName) {
             this.productName = productName;
             return this;
         }
 
-        public ProductBuilder category(Category category) {
+        public ProductDetailResDtoBuilder category(Category category) {
             this.category = category;
             return this;
         }
 
-        public ProductBuilder price(long price) {
+        public ProductDetailResDtoBuilder price(long price) {
             this.price = price;
             return this;
         }
 
-        public ProductBuilder description(String description) {
+        public ProductDetailResDtoBuilder description(String description) {
             this.description = description;
             return this;
         }
 
-        public ProductBuilder createdAt(LocalDateTime createdAt) {
+        public ProductDetailResDtoBuilder createdAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public ProductBuilder updatedAt(LocalDateTime updatedAt) {
+        public ProductDetailResDtoBuilder updatedAt(LocalDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        public Product build() {
-            return new Product(this.productId, this.productName, this.category, this.price, this.description, this.createdAt, this.updatedAt);
+        public ProductDetailResDto build() {
+            return new ProductDetailResDto(productId, productName, category, price, description, createdAt, updatedAt);
         }
     }
-
 
     public UUID getProductId() {
         return productId;
@@ -102,14 +103,5 @@ public class Product {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-
-    public void updateProduct(String productName, Category category, long price, String description) {
-        this.productName = productName;
-        this.category = category;
-        this.price = price;
-        this.description = description;
-        this.updatedAt =  LocalDateTime.now();
     }
 }
