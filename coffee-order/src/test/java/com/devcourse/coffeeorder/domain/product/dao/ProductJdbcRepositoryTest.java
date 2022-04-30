@@ -1,5 +1,7 @@
 package com.devcourse.coffeeorder.domain.product.dao;
 
+import static com.devcourse.coffeeorder.TestData.product;
+import static com.devcourse.coffeeorder.TestData.product2;
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static org.hamcrest.MatcherAssert.*;
@@ -53,25 +55,7 @@ class ProductJdbcRepositoryTest {
     @Autowired
     ProductRepository productRepository;
 
-    private Product product = Product.builder()
-            .productId(UUID.randomUUID())
-            .productName("test coffee")
-            .category(Category.COFFEE_BEAN_PACKAGE)
-            .price(2500)
-            .description("best coffee!")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
-            .build();
 
-    private Product product2 = Product.builder()
-            .productId(UUID.randomUUID())
-            .productName("test coffee2")
-            .category(Category.COFFEE_BEAN_PACKAGE)
-            .price(1000)
-            .description("cheap coffee!")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
-            .build();
 
     @Test
     @Order(1)

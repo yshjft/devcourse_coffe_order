@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 import com.devcourse.coffeeorder.global.exception.WrongInputException;
+import org.springframework.util.StringUtils;
 
 public class ProductReqDto {
     private String productName;
@@ -14,7 +15,7 @@ public class ProductReqDto {
     private String description;
 
     public ProductReqDto(String productName, Category category, long price, String description) {
-        if(productName == null || productName.equals("")) {
+        if(StringUtils.hasText(productName)) {
             throw new WrongInputException("productName is required property!");
         }
 

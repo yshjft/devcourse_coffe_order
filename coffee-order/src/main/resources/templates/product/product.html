@@ -17,7 +17,7 @@
     <div class="card">
         <div th:text="${product.productId}" class="card-header"></div>
         <div class="card-body">
-            <h5 th:text="${product.productName+', '+product.productId}" class="card-title"></h5>
+            <h5 th:text="${product.productName}" class="card-title"></h5>
             <p th:text="${product.description}" class="card-text"></p>
             <p th:text="${'카테고리: '+product.category}" class="card-text"></p>
             <p th:text="${'가격: '+product.price+'원'}" class="card-text"></p>
