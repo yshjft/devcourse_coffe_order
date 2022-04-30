@@ -2,6 +2,7 @@ package com.devcourse.coffeeorder.domain.product.controller;
 
 import com.devcourse.coffeeorder.domain.product.dto.ProductsResDto;
 import com.devcourse.coffeeorder.domain.product.service.ProductService;
+import com.devcourse.coffeeorder.global.common.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +19,13 @@ public class ProductRestController {
     }
 
     @GetMapping
-    public ResponseEntity<ProductsResDto> getProducts() {
+    public ResponseEntity<ResponseDto> getProducts() {
         ProductsResDto productsResDto = productService.findAll();
+
+        ResponseDto responseDto = new ResponseDto(HttpStatus.OK.value(), "get products successfully", productsResDto);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(productsResDto);
+                .body(responseDto);
     }
 }
