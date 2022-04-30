@@ -2,19 +2,19 @@ package com.devcourse.coffeeorder.domain.product.dto;
 
 import java.util.List;
 
-
+import com.devcourse.coffeeorder.global.common.MetaData;
 
 public class ProductsResDto {
-    private long total;
+    private MetaData metaData;
     private List<ProductResDto> products;
 
-    public ProductsResDto(long total, List<ProductResDto> products) {
-        this.total = total;
+    public ProductsResDto(MetaData metaData, List<ProductResDto> products) {
+        this.metaData = metaData;
         this.products = products;
     }
 
-    public long getTotal() {
-        return total;
+    public MetaData getMetaData() {
+        return metaData;
     }
 
     public List<ProductResDto> getProducts() {

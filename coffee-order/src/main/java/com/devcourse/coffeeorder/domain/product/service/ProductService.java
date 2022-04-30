@@ -4,6 +4,7 @@ import com.devcourse.coffeeorder.domain.product.dao.ProductRepository;
 import com.devcourse.coffeeorder.domain.product.dto.*;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
+import com.devcourse.coffeeorder.global.common.MetaData;
 import com.devcourse.coffeeorder.global.exception.ProductNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -40,8 +41,9 @@ public class ProductService {
                         .updatedAt(product.getUpdatedAt())
                         .build())
                 .collect(Collectors.toList());
+        MetaData metaData = new MetaData(products.size());
 
-        return new ProductsResDto(products.size(), products);
+        return new ProductsResDto(metaData, products);
     }
 
     // 카테고리 조회
@@ -58,7 +60,9 @@ public class ProductService {
                         .build())
                 .collect(Collectors.toList());
 
-        return new ProductsResDto(products.size(), products);
+        MetaData metaData = new MetaData(products.size());
+
+        return new ProductsResDto(metaData, products);
     }
 
     // ID에 의한 조회

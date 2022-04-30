@@ -1,11 +1,11 @@
 package com.devcourse.coffeeorder.domain.product.dto;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 import com.devcourse.coffeeorder.global.exception.WrongInputException;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class ProductReqDto {
     private String productName;

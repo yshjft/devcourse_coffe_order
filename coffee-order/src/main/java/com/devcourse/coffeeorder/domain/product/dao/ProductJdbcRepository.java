@@ -76,7 +76,7 @@ public class ProductJdbcRepository implements ProductRepository{
                 Collections.singletonMap("productId", product.getProductId().toString().getBytes()));
     }
 
-    private static final RowMapper<Product> productRowMapper = ((resultSet, i) -> {
+    private final RowMapper<Product> productRowMapper = ((resultSet, i) -> {
         UUID productId = toUUID(resultSet.getBytes("product_id"));
         String productName = resultSet.getString("product_name");
         Category category = Category.valueOf(resultSet.getString("category"));

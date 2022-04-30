@@ -1,9 +1,9 @@
 package com.devcourse.coffeeorder.domain.product.dto;
 
-import com.devcourse.coffeeorder.domain.product.entity.Category;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import com.devcourse.coffeeorder.domain.product.entity.Category;
 
 public class ProductResDto {
     private UUID productId;
