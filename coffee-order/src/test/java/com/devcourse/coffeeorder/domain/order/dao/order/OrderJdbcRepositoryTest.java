@@ -1,6 +1,7 @@
-package com.devcourse.coffeeorder.domain.order.dao;
+package com.devcourse.coffeeorder.domain.order.dao.order;
 
-import static com.devcourse.coffeeorder.TestData.*;
+import static com.devcourse.coffeeorder.TestData.order;
+import static com.devcourse.coffeeorder.TestData.order2;
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static org.hamcrest.Matchers.*;
@@ -9,9 +10,8 @@ import static org.hamcrest.MatcherAssert.*;
 import java.util.List;
 
 import com.devcourse.coffeeorder.domain.order.dao.order.OrderRepository;
-import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
-import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
-import com.devcourse.coffeeorder.domain.product.dao.ProductRepository;
+import com.devcourse.coffeeorder.domain.order.entity.order.Order;
+import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.ScriptResolver;
 import com.wix.mysql.config.Charset;
@@ -26,7 +26,7 @@ import org.springframework.test.context.ActiveProfiles;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class OrderItemJdbcRepositoryTest {
+class OrderJdbcRepositoryTest {
     static EmbeddedMysql embeddedMysql;
 
     @BeforeAll
@@ -43,8 +43,6 @@ class OrderItemJdbcRepositoryTest {
                 .start();
     }
 
-
-
     @AfterAll
     void cleanUp() {
         embeddedMysql.stop();
@@ -53,28 +51,28 @@ class OrderItemJdbcRepositoryTest {
     @Autowired
     OrderRepository orderRepository;
 
-    @Autowired
-    ProductRepository productRepository;
-
-    @Autowired
-    OrderItemRepository orderItemRepository;
-
-
     @Test
-    @Order(1)
-    @DisplayName("주문 상품 생성 및 조회")
-    void testOrderItemCreation() {
-        productRepository.create(coffee);
-        productRepository.create(cookie);
-
+    @org.junit.jupiter.api.Order(1)
+    @DisplayName("주문 생성 및 조회")
+    void testOrderCreation() {
         orderRepository.create(order);
 
-        orderItemRepository.create(orderItem1);
-        orderItemRepository.create(orderItem2);
+        List<Order> orders = orderRepository.findAll();
 
-        List<OrderItem> orderItems = orderItemRepository.findAll();
+        assertThat(orders.size(), is(1));
+        assertThat(orders.get(0), samePropertyValuesAs(order));
+    }
 
-        assertThat(orderItems.size(), is(2));
-        assertThat(orderItems.get(0).getOrderItemId(), is(1L));
+    @Test
+    @org.junit.jupiter.api.Order(2)
+    @DisplayName("주문 상태에 따른 조회 테스트")
+    void testGetOrderByStatus() {
+        orderRepository.create(order2);
+
+        List<Order> orders = orderRepository.findByStatus(OrderStatus.ORDER_ACCEPTED);
+        assertThat(orders.size(), is(2));
+
+        orders = orderRepository.findByStatus(OrderStatus.ORDER_CANCELLED);
+        assertThat(orders.size(), is(0));
     }
 }

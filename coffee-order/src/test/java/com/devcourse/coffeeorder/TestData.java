@@ -60,6 +60,16 @@ public class TestData {
             .updatedAt(LocalDateTime.now())
             .build();
 
+    public static Order order2 = Order.builder()
+            .orderId(UUID.randomUUID())
+            .email("tester@test.com")
+            .address("경기도 용인시 ㅁㅁ ~~")
+            .postcode("45678")
+            .orderStatus(OrderStatus.ORDER_ACCEPTED)
+            .createdAt(LocalDateTime.now())
+            .updatedAt(LocalDateTime.now())
+            .build();
+
     public static OrderItem orderItem1 = OrderItem.builder()
             .orderId(order.getOrderId())
             .productId(coffee.getProductId())

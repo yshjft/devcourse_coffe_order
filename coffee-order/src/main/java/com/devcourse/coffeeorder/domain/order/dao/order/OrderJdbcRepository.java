@@ -4,10 +4,7 @@ import static com.devcourse.coffeeorder.global.util.Util.toLocalDateTime;
 import static com.devcourse.coffeeorder.global.util.Util.toUUID;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
@@ -40,6 +37,12 @@ public class OrderJdbcRepository implements OrderRepository {
     @Override
     public List<Order> findAll() {
         return jdbcTemplate.query("SELECT * FROM orders", orderRowMapper);
+    }
+
+    @Override
+    public List<Order> findByStatus(OrderStatus orderStatus) {
+        return jdbcTemplate.query("SELECT * FROM orders WHERE order_status = :orderStatus",
+                Collections.singletonMap("orderStatus", orderStatus.toString()), orderRowMapper);
     }
 
     private final RowMapper<Order> orderRowMapper = ((resultSet, i)->{

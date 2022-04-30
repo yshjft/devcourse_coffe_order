@@ -1,18 +1,20 @@
-package com.devcourse.coffeeorder.domain.order.entity.order;
+package com.devcourse.coffeeorder.domain.order.dto.order;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Order {
-    private final UUID orderId;
-    private final String email;
+import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
+
+public class OrderResDto {
+    private UUID orderId;
+    private String email;
     private String address;
     private String postcode;
     private OrderStatus orderStatus;
-    private final LocalDateTime createdAt;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Order(UUID orderId, String email, String address, String postcode, OrderStatus orderStatus, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public OrderResDto(UUID orderId, String email, String address, String postcode, OrderStatus orderStatus, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.orderId = orderId;
         this.email = email;
         this.address = address;
@@ -22,11 +24,11 @@ public class Order {
         this.updatedAt = updatedAt;
     }
 
-    public static OrderBuilder builder() {
-        return new OrderBuilder();
+    public static OrderResDtoBuilder builder() {
+        return new OrderResDtoBuilder();
     }
 
-    public static class OrderBuilder {
+    public static class OrderResDtoBuilder {
         private UUID orderId;
         private String email;
         private String address;
@@ -35,43 +37,43 @@ public class Order {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
-        public OrderBuilder orderId(UUID orderId) {
+        public OrderResDtoBuilder orderId(UUID orderId) {
             this.orderId = orderId;
             return this;
         }
 
-        public OrderBuilder email(String email) {
+        public OrderResDtoBuilder email(String email) {
             this.email = email;
             return this;
         }
 
-        public OrderBuilder address(String address) {
+        public OrderResDtoBuilder address(String address) {
             this.address = address;
             return this;
         }
 
-        public OrderBuilder postcode(String postcode) {
+        public OrderResDtoBuilder postcode(String postcode) {
             this.postcode = postcode;
             return this;
         }
 
-        public OrderBuilder orderStatus(OrderStatus orderStatus) {
+        public OrderResDtoBuilder orderStatus(OrderStatus orderStatus) {
             this.orderStatus = orderStatus;
             return this;
         }
 
-        public OrderBuilder createdAt(LocalDateTime createdAt) {
+        public OrderResDtoBuilder createdAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public OrderBuilder updatedAt(LocalDateTime updatedAt) {
+        public OrderResDtoBuilder updatedAt(LocalDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        public Order build() {
-            return new Order(orderId, email, address, postcode, orderStatus, createdAt, updatedAt);
+        public OrderResDto build() {
+            return new OrderResDto(orderId, email, address, postcode, orderStatus, createdAt, updatedAt);
         }
     }
 
@@ -101,20 +103,5 @@ public class Order {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void updateAddress(String address) {
-        this.address = address;
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    public void updatePostcode(String postcode) {
-        this.postcode = postcode;
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    public void updateOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-        this.updatedAt = LocalDateTime.now();
     }
 }

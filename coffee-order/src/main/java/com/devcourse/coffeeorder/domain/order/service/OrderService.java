@@ -7,7 +7,9 @@ import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
 import com.devcourse.coffeeorder.domain.order.dao.order.OrderRepository;
 import com.devcourse.coffeeorder.domain.order.dto.order.OrderCreateReqDto;
 import com.devcourse.coffeeorder.domain.order.dto.order.OrderCreateResDto;
+import com.devcourse.coffeeorder.domain.order.dto.order.OrderResDto;
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
+import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,4 +36,21 @@ public class OrderService {
 
         return new OrderCreateResDto(newOrder.getOrderId(), newOrder.getCreatedAt());
     }
+
+    public List<OrderResDto> getOrderByStatus(OrderStatus orderStatus) {
+        return orderRepository.findByStatus(orderStatus).stream()
+                .map(order -> OrderResDto.builder()
+                        .orderId(order.getOrderId())
+                        .email(order.getEmail())
+                        .address(order.getAddress())
+                        .postcode(order.getPostcode())
+                        .orderStatus(order.getOrderStatus())
+                        .createdAt(order.getCreatedAt())
+                        .updatedAt(order.getUpdatedAt())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    // 처리중
+
 }

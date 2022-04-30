@@ -1,6 +1,6 @@
-package com.devcourse.coffeeorder.domain.order.dao;
+package com.devcourse.coffeeorder.domain.order.dao.orderitem;
 
-import static com.devcourse.coffeeorder.TestData.order;
+import static com.devcourse.coffeeorder.TestData.*;
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static org.hamcrest.Matchers.*;
@@ -9,7 +9,9 @@ import static org.hamcrest.MatcherAssert.*;
 import java.util.List;
 
 import com.devcourse.coffeeorder.domain.order.dao.order.OrderRepository;
-import com.devcourse.coffeeorder.domain.order.entity.order.Order;
+import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
+import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
+import com.devcourse.coffeeorder.domain.product.dao.ProductRepository;
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.ScriptResolver;
 import com.wix.mysql.config.Charset;
@@ -24,7 +26,7 @@ import org.springframework.test.context.ActiveProfiles;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class OrderJdbcRepositoryTest {
+class OrderItemJdbcRepositoryTest {
     static EmbeddedMysql embeddedMysql;
 
     @BeforeAll
@@ -41,6 +43,8 @@ class OrderJdbcRepositoryTest {
                 .start();
     }
 
+
+
     @AfterAll
     void cleanUp() {
         embeddedMysql.stop();
@@ -49,16 +53,28 @@ class OrderJdbcRepositoryTest {
     @Autowired
     OrderRepository orderRepository;
 
+    @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
+    OrderItemRepository orderItemRepository;
+
+
     @Test
-    @org.junit.jupiter.api.Order(1)
-    @DisplayName("주문 생성 및 조회")
-    void testOrderCreation() {
+    @Order(1)
+    @DisplayName("주문 상품 생성 및 조회")
+    void testOrderItemCreation() {
+        productRepository.create(coffee);
+        productRepository.create(cookie);
+
         orderRepository.create(order);
 
-        List<Order> orders = orderRepository.findAll();
+        orderItemRepository.create(orderItem1);
+        orderItemRepository.create(orderItem2);
 
-        assertThat(orders.size(), is(1));
-        assertThat(orders.get(0), samePropertyValuesAs(order));
+        List<OrderItem> orderItems = orderItemRepository.findAll();
+
+        assertThat(orderItems.size(), is(2));
+        assertThat(orderItems.get(0).getOrderItemId(), is(1L));
     }
-
 }
