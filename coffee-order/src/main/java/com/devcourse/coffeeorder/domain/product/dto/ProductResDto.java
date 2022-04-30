@@ -1,23 +1,27 @@
 package com.devcourse.coffeeorder.domain.product.dto;
 
+import com.devcourse.coffeeorder.domain.product.entity.Category;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import com.devcourse.coffeeorder.domain.product.entity.Category;
 
 public class ProductResDto {
     private UUID productId;
     private String productName;
     private Category category;
     private long price;
+    private String description;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-    public ProductResDto(UUID productId, String productName, Category category, long price, LocalDateTime createdAt) {
+    public ProductResDto(UUID productId, String productName, Category category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.productId = productId;
         this.productName = productName;
         this.category = category;
         this.price = price;
+        this.description = description;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public static ProductResDtoBuilder builder() {
@@ -29,7 +33,9 @@ public class ProductResDto {
         private String productName;
         private Category category;
         private long price;
+        private String description;
         private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
 
         public ProductResDtoBuilder productId(UUID productId) {
             this.productId = productId;
@@ -51,13 +57,23 @@ public class ProductResDto {
             return this;
         }
 
+        public ProductResDtoBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
         public ProductResDtoBuilder createdAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
+        public ProductResDtoBuilder updatedAt(LocalDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
         public ProductResDto build() {
-            return new ProductResDto(productId, productName, category, price, createdAt);
+            return new ProductResDto(productId, productName, category, price, description, createdAt, updatedAt);
         }
     }
 
@@ -77,7 +93,15 @@ public class ProductResDto {
         return price;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }

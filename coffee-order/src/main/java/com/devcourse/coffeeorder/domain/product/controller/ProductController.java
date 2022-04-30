@@ -1,7 +1,7 @@
 package com.devcourse.coffeeorder.domain.product.controller;
 
 import com.devcourse.coffeeorder.domain.product.dto.ProductReqDto;
-import com.devcourse.coffeeorder.domain.product.dto.ProductDetailResDto;
+import com.devcourse.coffeeorder.domain.product.dto.ProductResDto;
 import com.devcourse.coffeeorder.domain.product.dto.ProductsResDto;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.service.ProductService;
@@ -47,8 +47,8 @@ public class ProductController {
 
     @GetMapping("/products/{productId}")
     public String viewProductPage(@PathVariable UUID productId, Model model) {
-        ProductDetailResDto productDetailResDto = productService.findByProductId(productId);
-        model.addAttribute("product", productDetailResDto);
+        ProductResDto productResDto = productService.findByProductId(productId);
+        model.addAttribute("product", productResDto);
 
         return "product/product";
     }
@@ -56,10 +56,10 @@ public class ProductController {
     // UPDATE
     @GetMapping("/products/{productId}/update")
     public String viewProductUpdatePage(@PathVariable UUID productId, Model model) {
-        ProductDetailResDto productDetailResDto = productService.findByProductId(productId);
+        ProductResDto productResDto = productService.findByProductId(productId);
 
         model.addAttribute("categories", Category.values());
-        model.addAttribute("product", productDetailResDto);
+        model.addAttribute("product", productResDto);
         return "product/update-product";
     }
 

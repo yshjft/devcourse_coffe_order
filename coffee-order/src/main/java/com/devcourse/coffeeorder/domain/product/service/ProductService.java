@@ -35,7 +35,9 @@ public class ProductService {
                         .productName(product.getProductName())
                         .category(product.getCategory())
                         .price(product.getPrice())
+                        .description(product.getDescription())
                         .createdAt(product.getCreatedAt())
+                        .updatedAt(product.getUpdatedAt())
                         .build())
                 .collect(Collectors.toList());
 
@@ -50,7 +52,9 @@ public class ProductService {
                         .productName(product.getProductName())
                         .category(product.getCategory())
                         .price(product.getPrice())
+                        .description(product.getDescription())
                         .createdAt(product.getCreatedAt())
+                        .updatedAt(product.getUpdatedAt())
                         .build())
                 .collect(Collectors.toList());
 
@@ -58,10 +62,10 @@ public class ProductService {
     }
 
     // ID에 의한 조회
-    public ProductDetailResDto findByProductId(UUID productId) {
+    public ProductResDto findByProductId(UUID productId) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId.toString()));
 
-        return ProductDetailResDto.builder()
+        return ProductResDto.builder()
                 .productId(product.getProductId())
                 .productName(product.getProductName())
                 .category(product.getCategory())
