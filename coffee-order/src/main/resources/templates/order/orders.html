@@ -26,8 +26,6 @@
             <tr>
                 <th scope="col">주문 ID</th>
                 <th scope="col">Email</th>
-                <th scope="col">주소</th>
-                <th scope="col">우편번호</th>
                 <th scope="col">주문 상태</th>
                 <th scope="col">주문 생성일</th>
             </tr>
@@ -38,8 +36,6 @@
                     <a th:href="@{'/orders/'+ *{orderId}}" th:text="*{orderId}"></a>
                 </td>
                 <td th:text="*{email}"></td>
-                <td th:text="*{address}"></td>
-                <td th:text="*{postcode}"></td>
                 <td th:text="*{orderStatus}"></td>
                 <td th:text="*{createdAt}"></td>
             </tr>
@@ -54,8 +50,6 @@
             <tr>
                 <th scope="col">주문 ID</th>
                 <th scope="col">Email</th>
-                <th scope="col">주소</th>
-                <th scope="col">우편번호</th>
                 <th scope="col">주문 상태</th>
                 <th scope="col">주문 생성일</th>
             </tr>
@@ -66,8 +60,6 @@
                     <a th:href="@{'/orders/'+ *{orderId}}" th:text="*{orderId}"></a>
                 </td>
                 <td th:text="*{email}"></td>
-                <td th:text="*{address}"></td>
-                <td th:text="*{postcode}"></td>
                 <td th:text="*{orderStatus}"></td>
                 <td th:text="*{createdAt}"></td>
             </tr>
@@ -82,8 +74,6 @@
             <tr>
                 <th scope="col">주문 ID</th>
                 <th scope="col">Email</th>
-                <th scope="col">주소</th>
-                <th scope="col">우편번호</th>
                 <th scope="col">주문 상태</th>
                 <th scope="col">주문 생성일</th>
             </tr>
@@ -94,8 +84,6 @@
                     <a th:href="@{'/orders/'+ *{orderId}}" th:text="*{orderId}"></a>
                 </td>
                 <td th:text="*{email}"></td>
-                <td th:text="*{address}"></td>
-                <td th:text="*{postcode}"></td>
                 <td th:text="*{orderStatus}"></td>
                 <td th:text="*{createdAt}"></td>
             </tr>
@@ -110,8 +98,6 @@
             <tr>
                 <th scope="col">주문 ID</th>
                 <th scope="col">Email</th>
-                <th scope="col">주소</th>
-                <th scope="col">우편번호</th>
                 <th scope="col">주문 상태</th>
                 <th scope="col">주문 생성일</th>
             </tr>
@@ -122,8 +108,6 @@
                     <a th:href="@{'/orders/'+ *{orderId}}" th:text="*{orderId}"></a>
                 </td>
                 <td th:text="*{email}"></td>
-                <td th:text="*{address}"></td>
-                <td th:text="*{postcode}"></td>
                 <td th:text="*{orderStatus}"></td>
                 <td th:text="*{createdAt}"></td>
             </tr>
@@ -132,14 +116,12 @@
     </div>
 
     <div class="order-table">
-        <h4>취소</h4>
+        <h4>주문 취소</h4>
         <table class="table table-hover">
             <thead>
             <tr>
                 <th scope="col">주문 ID</th>
                 <th scope="col">Email</th>
-                <th scope="col">주소</th>
-                <th scope="col">우편번호</th>
                 <th scope="col">주문 상태</th>
                 <th scope="col">주문 생성일</th>
             </tr>
@@ -150,14 +132,13 @@
                     <a th:href="@{'/orders/'+ *{orderId}}" th:text="*{orderId}"></a>
                 </td>
                 <td th:text="*{email}"></td>
-                <td th:text="*{address}"></td>
-                <td th:text="*{postcode}"></td>
                 <td th:text="*{orderStatus}"></td>
                 <td th:text="*{createdAt}"></td>
             </tr>
             </tbody>
         </table>
     </div>
+
 </div>
 </body>
 </html>

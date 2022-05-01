@@ -30,7 +30,7 @@ public class ProductService {
 
     // 전체 조회
     public ProductsResDto findAll() {
-        List<ProductResDto> products = productRepository.findAll().stream()
+        List<ProductResDto> productList = productRepository.findAll().stream()
                 .map(product -> ProductResDto.builder()
                         .productId(product.getProductId())
                         .productName(product.getProductName())
@@ -41,14 +41,14 @@ public class ProductService {
                         .updatedAt(product.getUpdatedAt())
                         .build())
                 .collect(Collectors.toList());
-        MetaData metaData = new MetaData(products.size());
+        MetaData metaData = new MetaData(productList.size());
 
-        return new ProductsResDto(metaData, products);
+        return new ProductsResDto(metaData, productList);
     }
 
     // 카테고리 조회
     public ProductsResDto findAllWithCategory(Category category) {
-        List<ProductResDto> products = productRepository.findByCategory(category).stream()
+        List<ProductResDto> productList = productRepository.findByCategory(category).stream()
                 .map(product -> ProductResDto.builder()
                         .productId(product.getProductId())
                         .productName(product.getProductName())
@@ -60,9 +60,9 @@ public class ProductService {
                         .build())
                 .collect(Collectors.toList());
 
-        MetaData metaData = new MetaData(products.size());
+        MetaData metaData = new MetaData(productList.size());
 
-        return new ProductsResDto(metaData, products);
+        return new ProductsResDto(metaData, productList);
     }
 
     // ID에 의한 조회

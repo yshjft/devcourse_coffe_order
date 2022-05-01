@@ -12,7 +12,8 @@
     display: flex;
 }
 
-.order-table{
+.order-table, .order-item-table{
+    margin: 20px 0px;
     padding: 10px;
     border: 1px solid silver;
     border-radius: 10px;

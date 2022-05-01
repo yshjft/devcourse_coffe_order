@@ -2,6 +2,7 @@ package com.devcourse.coffeeorder.domain.order.dao.order;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
@@ -14,7 +15,9 @@ public interface OrderRepository {
 
     List<Order> findByStatus(OrderStatus orderStatus);
 
-    void updateStatusById(OrderStatus orderStatus, UUID orderId);
+    Optional<Order> findById(UUID orderId);
+
+    void updateStatusById(UUID orderId, OrderStatus orderStatus);
 
     void orderAcceptedToPreparingForShipment(LocalDateTime time);
 }

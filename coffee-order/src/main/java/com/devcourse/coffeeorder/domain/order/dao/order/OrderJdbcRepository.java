@@ -10,6 +10,7 @@ import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
 import com.devcourse.coffeeorder.global.exception.CreationException;
 import com.devcourse.coffeeorder.global.exception.UpdateException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -47,7 +48,20 @@ public class OrderJdbcRepository implements OrderRepository {
     }
 
     @Override
-    public void updateStatusById(OrderStatus orderStatus, UUID orderId) {
+    public Optional<Order> findById(UUID orderId) {
+        try {
+            return Optional.ofNullable(
+                    jdbcTemplate.queryForObject("SELECT * FROM orders WHERE order_id = UUID_TO_BIN(:orderId)",
+                            Collections.singletonMap("orderId", orderId.toString().getBytes()), orderRowMapper)
+            );
+        }catch(EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    // updateById
+    @Override
+    public void updateStatusById( UUID orderId, OrderStatus orderStatus) {
         Map<String, Object> map = new HashMap<>();
         map.put("orderStatus", orderStatus.toString());
         map.put("orderId", orderId.toString().getBytes());

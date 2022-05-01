@@ -1,5 +1,7 @@
 package com.devcourse.coffeeorder.domain.order.entity.orderitem;
 
+import com.devcourse.coffeeorder.domain.product.entity.Product;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -8,14 +10,16 @@ public class OrderItem {
     private final UUID orderId;
     private final UUID productId;
     private int quantity;
+    private Product product;
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public OrderItem(Long orderItemId, UUID orderId, UUID productId, int quantity, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public OrderItem(Long orderItemId, UUID orderId, UUID productId, int quantity, Product product, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.orderItemId = orderItemId;
         this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;
+        this.product = product;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -29,6 +33,7 @@ public class OrderItem {
         private UUID orderId;
         private UUID productId;
         private int quantity;
+        private Product product;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -52,6 +57,11 @@ public class OrderItem {
             return this;
         }
 
+        public OrderItemBuilder product(Product product) {
+            this.product = product;
+            return this;
+        }
+
         public OrderItemBuilder createdAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
@@ -63,7 +73,7 @@ public class OrderItem {
         }
 
         public OrderItem build() {
-            return new OrderItem(orderItemId, orderId, productId, quantity, createdAt, updatedAt);
+            return new OrderItem(orderItemId, orderId, productId, quantity, product, createdAt, updatedAt);
         }
     }
 
@@ -81,6 +91,10 @@ public class OrderItem {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 
     public LocalDateTime getCreatedAt() {

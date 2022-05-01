@@ -6,9 +6,7 @@ import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
@@ -81,7 +79,7 @@ class OrderJdbcRepositoryTest {
     @org.junit.jupiter.api.Order(3)
     @DisplayName("주문 접수 -> 주문 준비 중 by time")
     void testUpdateOrderStatusByTime() {
-        LocalDateTime testTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(21, 50, 0, 0));
+        LocalDateTime testTime = LocalDateTime.now().plusHours(2);
         orderRepository.orderAcceptedToPreparingForShipment(testTime);
 
         List<Order> orders = orderRepository.findByStatus(OrderStatus.PREPARING_FOR_SHIPMENT);
@@ -92,10 +90,19 @@ class OrderJdbcRepositoryTest {
     @org.junit.jupiter.api.Order(4)
     @DisplayName("주문 상태 변경 by ID")
     void testUpdateOrderStatusById() {
-        orderRepository.updateStatusById(OrderStatus.ORDER_ACCEPTED, order.getOrderId());
+        orderRepository.updateStatusById(order.getOrderId(), OrderStatus.ORDER_ACCEPTED);
 
         List<Order> orders = orderRepository.findByStatus(OrderStatus.ORDER_ACCEPTED);
         assertThat(orders.size(), is(1));
+    }
+
+    @Test
+    @org.junit.jupiter.api.Order(5)
+    @DisplayName("id에 의한 주문 조회")
+    void testFindById() {
+        Order retrievedOrder = orderRepository.findById(order.getOrderId()).get();
+
+        assertThat(retrievedOrder, samePropertyValuesAs(order));
     }
 
 }

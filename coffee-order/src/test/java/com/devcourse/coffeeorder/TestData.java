@@ -85,4 +85,23 @@ public class TestData {
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())
             .build();
+
+    public static OrderItem orderItem3 = OrderItem.builder()
+            .orderItemId(1L)
+            .orderId(order.getOrderId())
+            .productId(coffee.getProductId())
+            .quantity(3)
+            .product(coffee)
+            .createdAt(LocalDateTime.now())
+            .updatedAt(LocalDateTime.now())
+            .build();
+
+    public static OrderItem orderItem4 = OrderItem.builder()
+            .orderItemId(2L)
+            .productId(cookie.getProductId())
+            .quantity(10)
+            .product(cookie)
+            .createdAt(LocalDateTime.now())
+            .updatedAt(LocalDateTime.now())
+            .build();
 }

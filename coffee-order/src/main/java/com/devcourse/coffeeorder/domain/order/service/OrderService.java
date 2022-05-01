@@ -4,16 +4,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
 import com.devcourse.coffeeorder.domain.order.dao.order.OrderRepository;
-import com.devcourse.coffeeorder.domain.order.dto.order.OrderCreateReqDto;
-import com.devcourse.coffeeorder.domain.order.dto.order.OrderCreateResDto;
-import com.devcourse.coffeeorder.domain.order.dto.order.OrderResDto;
+import com.devcourse.coffeeorder.domain.order.dto.order.*;
+import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemWithProductResDto;
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
+import com.devcourse.coffeeorder.global.exception.OrderNotFoundException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,12 +32,12 @@ public class OrderService {
     @Transactional
     public OrderCreateResDto createOrder(OrderCreateReqDto orderCreateReqDto) {
         Order order = orderCreateReqDto.toEntity();
-        List<OrderItem> orderItems =  orderCreateReqDto.getOrderItems().stream()
+        List<OrderItem> orderItemList =  orderCreateReqDto.getOrderItems().stream()
                 .map(orderItemCreateReqDto -> orderItemCreateReqDto.toEntity(order.getOrderId(), order.getCreatedAt(), order.getUpdatedAt()))
                 .collect(Collectors.toList());
 
         Order newOrder = orderRepository.create(order);
-        orderItems.forEach(orderItem -> orderItemRepository.create(orderItem));
+        orderItemList.forEach(orderItem -> orderItemRepository.create(orderItem));
 
         return new OrderCreateResDto(newOrder.getOrderId(), newOrder.getCreatedAt());
     }
@@ -46,13 +47,43 @@ public class OrderService {
                 .map(order -> OrderResDto.builder()
                         .orderId(order.getOrderId())
                         .email(order.getEmail())
-                        .address(order.getAddress())
-                        .postcode(order.getPostcode())
                         .orderStatus(order.getOrderStatus())
                         .createdAt(order.getCreatedAt())
-                        .updatedAt(order.getUpdatedAt())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    public OrderDetailResDto getOrderDetail(UUID orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId.toString()));
+        List<OrderItem> orderItemList = orderItemRepository.findByIdWithProduct(orderId);
+
+        List<OrderItemWithProductResDto> orderItemDtoList = orderItemList.stream()
+                .map(orderItem -> OrderItemWithProductResDto.builder()
+                        .orderItemId(orderItem.getOrderItemId())
+                        .quantity(orderItem.getQuantity())
+                        .productId(orderItem.getProduct().getProductId())
+                        .productName(orderItem.getProduct().getProductName())
+                        .category(orderItem.getProduct().getCategory())
+                        .price(orderItem.getProduct().getPrice())
+                        .build())
+                .collect(Collectors.toList());
+
+        return OrderDetailResDto.builder()
+                .orderId(order.getOrderId())
+                .email(order.getEmail())
+                .address(order.getAddress())
+                .postcode(order.getPostcode())
+                .orderStatus(order.getOrderStatus())
+                .orderItems(orderItemDtoList)
+                .createdAt(order.getCreatedAt())
+                .updatedAt(order.getUpdatedAt())
+                .build();
+    }
+
+    public OrderUpdateResDto updateOrderStatus(UUID orderId, OrderStatus orderStatus) {
+        // 조회
+        // update
+        return new OrderUpdateResDto(orderId, null);
     }
 
     @Scheduled(cron = "05 00 14 * * ?")

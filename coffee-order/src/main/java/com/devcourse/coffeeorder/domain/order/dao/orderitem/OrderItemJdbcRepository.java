@@ -3,12 +3,11 @@ package com.devcourse.coffeeorder.domain.order.dao.orderitem;
 import static com.devcourse.coffeeorder.global.util.Util.toLocalDateTime;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
+import com.devcourse.coffeeorder.domain.product.entity.Category;
+import com.devcourse.coffeeorder.domain.product.entity.Product;
 import com.devcourse.coffeeorder.global.exception.CreationException;
 import com.devcourse.coffeeorder.global.util.Util;
 import org.springframework.jdbc.core.RowMapper;
@@ -40,6 +39,13 @@ public class OrderItemJdbcRepository implements OrderItemRepository {
         return jdbcTemplate.query("SELECT * FROM order_items", orderItemRowMapper);
     }
 
+    @Override
+    public List<OrderItem> findByIdWithProduct(UUID orderId) {
+        return jdbcTemplate.query("SELECT * FROM order_items JOIN products ON order_items.product_id = products.product_id WHERE order_items.order_id = UUID_TO_BIN(:orderId) ORDER BY order_items.seq",
+                Collections.singletonMap("orderId", orderId.toString().getBytes()),
+                orderItemWithProductRowMapper);
+    }
+
     private final RowMapper<OrderItem> orderItemRowMapper = ((resultSet, i) -> {
         Long orderItemId = resultSet.getLong("seq");
         UUID orderId = Util.toUUID(resultSet.getBytes("order_id"));
@@ -53,6 +59,42 @@ public class OrderItemJdbcRepository implements OrderItemRepository {
                 .orderId(orderId)
                 .productId(productId)
                 .quantity(quantity)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .build();
+    });
+
+    private final RowMapper<OrderItem> orderItemWithProductRowMapper = ((resultSet, i) -> {
+        Long orderItemId = resultSet.getLong("order_items.seq");
+        UUID orderId = Util.toUUID(resultSet.getBytes("order_items.order_id"));
+        UUID productId = Util.toUUID(resultSet.getBytes("order_items.product_id"));
+        int quantity = resultSet.getInt("order_items.quantity");
+        LocalDateTime createdAt = toLocalDateTime(resultSet.getTimestamp("order_items.created_at"));
+        LocalDateTime updatedAt = toLocalDateTime(resultSet.getTimestamp("order_items.updated_at"));
+
+        String productName = resultSet.getString("products.product_name");
+        Category category = Category.valueOf(resultSet.getString("products.category"));
+        long price = resultSet.getLong("products.price");
+        String description = resultSet.getString("products.description");
+        LocalDateTime productCreatedAt = toLocalDateTime(resultSet.getTimestamp("products.created_at"));
+        LocalDateTime productUpdatedAt = toLocalDateTime(resultSet.getTimestamp("products.updated_at"));
+
+        Product product = Product.builder()
+                .productId(productId)
+                .productName(productName)
+                .category(category)
+                .price(price)
+                .description(description)
+                .createdAt(productCreatedAt)
+                .updatedAt(productUpdatedAt)
+                .build();
+
+        return OrderItem.builder()
+                .orderItemId(orderItemId)
+                .orderId(orderId)
+                .productId(productId)
+                .quantity(quantity)
+                .product(product)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();
