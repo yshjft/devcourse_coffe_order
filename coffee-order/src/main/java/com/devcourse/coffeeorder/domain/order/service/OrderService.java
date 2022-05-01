@@ -1,5 +1,8 @@
 package com.devcourse.coffeeorder.domain.order.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +14,7 @@ import com.devcourse.coffeeorder.domain.order.dto.order.OrderResDto;
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +55,10 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    // 처리중
+    @Scheduled(cron = "05 00 14 * * ?")
+    public void changeAcceptedToPreparing() {
+        LocalDateTime standardTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(14, 0, 0, 0));
+        orderRepository.orderAcceptedToPreparingForShipment(standardTime);
+    }
 
 }

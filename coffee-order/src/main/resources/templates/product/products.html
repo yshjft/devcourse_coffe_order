@@ -22,7 +22,10 @@
                    th:href="@{'/products?category='+${category}}"
                    th:text="${category}" class="btn btn-outline-primary me-md-2" type="button"></a>
             </div>
-            <a th:href="@{/products/new}"  class="btn btn-primary me-md-2" type="button">상품 등록</a>
+            <div class="d-flex justify-content-end">
+                <a th:href="@{/orders}"  class="btn btn-primary me-md-2" type="button">주문 관리</a>
+                <a th:href="@{/products/new}"  class="btn btn-primary me-md-2" type="button">상품 등록</a>
+            </div>
         </div>
     </div>
     <table class="table table-hover">

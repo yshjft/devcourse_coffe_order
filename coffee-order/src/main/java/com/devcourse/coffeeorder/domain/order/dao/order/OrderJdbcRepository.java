@@ -9,6 +9,7 @@ import java.util.*;
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
 import com.devcourse.coffeeorder.global.exception.CreationException;
+import com.devcourse.coffeeorder.global.exception.UpdateException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -43,6 +44,25 @@ public class OrderJdbcRepository implements OrderRepository {
     public List<Order> findByStatus(OrderStatus orderStatus) {
         return jdbcTemplate.query("SELECT * FROM orders WHERE order_status = :orderStatus",
                 Collections.singletonMap("orderStatus", orderStatus.toString()), orderRowMapper);
+    }
+
+    @Override
+    public void updateStatusById(OrderStatus orderStatus, UUID orderId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("orderStatus", orderStatus.toString());
+        map.put("orderId", orderId.toString().getBytes());
+
+        int update = jdbcTemplate.update("UPDATE orders set order_status = :orderStatus where order_id = UUID_TO_BIN(:orderId)", map);
+
+        if(update != 1) {
+            throw new UpdateException(String.format("failed to update order status(order: %s)", orderId.toString()));
+        }
+    }
+
+    @Override
+    public void orderAcceptedToPreparingForShipment(LocalDateTime time) {
+        jdbcTemplate.update("UPDATE orders set order_status = 'PREPARING_FOR_SHIPMENT' where created_at <= :time and order_status = 'ORDER_ACCEPTED'",
+                Collections.singletonMap("time", time));
     }
 
     private final RowMapper<Order> orderRowMapper = ((resultSet, i)->{
