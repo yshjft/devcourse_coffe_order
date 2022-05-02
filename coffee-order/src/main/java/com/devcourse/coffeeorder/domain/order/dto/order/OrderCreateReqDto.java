@@ -9,7 +9,10 @@ import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
 import com.devcourse.coffeeorder.global.exception.WrongInputException;
+import com.devcourse.coffeeorder.global.util.Util;
 import org.springframework.util.StringUtils;
+
+import static com.devcourse.coffeeorder.global.util.Util.*;
 
 public class OrderCreateReqDto {
     private String email;
@@ -87,6 +90,9 @@ public class OrderCreateReqDto {
     private void validateParams(String email, String address, String postcode, List<OrderItemCreateReqDto> orderItems) {
         if(!StringUtils.hasText(email)) {
             throw new WrongInputException("email is required property!");
+        }
+        if(!isValidEmail(email)) {
+            throw new WrongInputException("wrong email format!");
         }
         if(!StringUtils.hasText(address)) {
             throw new WrongInputException("address is required property!");
