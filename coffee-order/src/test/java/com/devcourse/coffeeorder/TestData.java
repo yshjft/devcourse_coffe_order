@@ -1,5 +1,6 @@
 package com.devcourse.coffeeorder;
 
+import com.devcourse.coffeeorder.domain.order.dto.order.OrderUpdateReqDto;
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
@@ -70,6 +71,16 @@ public class TestData {
             .updatedAt(LocalDateTime.now())
             .build();
 
+    public static Order order3 = Order.builder()
+            .orderId(UUID.randomUUID())
+            .email("tester@test.com")
+            .address("경기도 용인시 처이군 ~~")
+            .postcode("12345")
+            .orderStatus(OrderStatus.ORDER_CANCELLED)
+            .createdAt(LocalDateTime.now())
+            .updatedAt(LocalDateTime.now())
+            .build();
+
     public static OrderItem orderItem1 = OrderItem.builder()
             .orderId(order.getOrderId())
             .productId(coffee.getProductId())
@@ -104,4 +115,6 @@ public class TestData {
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())
             .build();
+
+    public static OrderUpdateReqDto orderUpdateReqDto = new OrderUpdateReqDto("경기도 수원시 ", "00000");
 }

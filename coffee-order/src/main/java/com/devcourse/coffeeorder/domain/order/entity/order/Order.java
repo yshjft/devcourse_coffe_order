@@ -1,5 +1,7 @@
 package com.devcourse.coffeeorder.domain.order.entity.order;
 
+import static com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus.*;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -101,6 +103,14 @@ public class Order {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public boolean isCancelable() {
+        return ORDER_ACCEPTED == this.orderStatus;
+    }
+
+    public boolean isUpdatable() {
+        return ORDER_ACCEPTED == this.orderStatus || PREPARING_FOR_SHIPMENT == this.orderStatus;
     }
 
     public void updateAddress(String address) {

@@ -1,16 +1,15 @@
 package com.devcourse.coffeeorder.domain.order.controller;
 
-import com.devcourse.coffeeorder.domain.order.dto.order.OrderCreateReqDto;
-import com.devcourse.coffeeorder.domain.order.dto.order.OrderCreateResDto;
-import com.devcourse.coffeeorder.domain.order.dto.order.OrderDetailResDto;
-import com.devcourse.coffeeorder.domain.order.dto.order.OrdersResDto;
+import static com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus.*;
+
+import java.util.UUID;
+
+import com.devcourse.coffeeorder.domain.order.dto.order.*;
 import com.devcourse.coffeeorder.domain.order.service.OrderService;
 import com.devcourse.coffeeorder.global.common.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -53,4 +52,27 @@ public class OrderRestController {
                 .status(HttpStatus.OK)
                 .body(responseDto);
     }
+
+    @PutMapping("/{orderId}")
+    public ResponseEntity<ResponseDto> updateOrder(@PathVariable UUID orderId, @RequestBody OrderUpdateReqDto orderUpdateReqDto) {
+        OrderUpdateResDto orderUpdateResDto = orderService.updateOrder(orderId, orderUpdateReqDto);
+
+        ResponseDto responseDto = new ResponseDto<>(HttpStatus.OK.value(), "update order successfully", orderUpdateResDto);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseDto);
+    }
+
+    @PutMapping("/{orderId}/cancel")
+    public ResponseEntity<ResponseDto> cancelOrderStatus(@PathVariable UUID orderId) {
+        OrderUpdateResDto orderUpdateResDto = orderService.cancelOrder(orderId, ORDER_CANCELLED);
+
+        ResponseDto responseDto = new ResponseDto<>(HttpStatus.OK.value(), "cancel order successfully", orderUpdateResDto);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseDto);
+    }
+
 }

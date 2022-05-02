@@ -7,9 +7,7 @@ import java.util.UUID;
 import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemCreateReqDto;
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
-import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
 import com.devcourse.coffeeorder.global.exception.WrongInputException;
-import com.devcourse.coffeeorder.global.util.Util;
 import org.springframework.util.StringUtils;
 
 import static com.devcourse.coffeeorder.global.util.Util.*;

@@ -10,6 +10,7 @@ import java.util.UUID;
 import com.devcourse.coffeeorder.domain.order.dao.order.OrderRepository;
 import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
 import com.devcourse.coffeeorder.global.exception.OrderNotFoundException;
+import com.devcourse.coffeeorder.global.exception.OrderUpdateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -73,6 +74,40 @@ class OrderServiceTest {
         orderService.getOrdersByEmail(order.getEmail());
 
         verify(orderItemRepository).findByOrderIdWithProduct(order.getOrderId());
+    }
+
+    @Test
+    @DisplayName("주문 수정 예외 테스트1")
+    void testUpdateOrderException1() {
+        try{
+            when(orderRepository.findById(order.getOrderId())).thenThrow(new OrderNotFoundException());
+
+            orderService.updateOrder(order.getOrderId(), orderUpdateReqDto);
+        }catch (OrderNotFoundException e) {
+            verify(orderRepository, never()).update(any());
+        }
+    }
+
+    @Test
+    @DisplayName("주문 수정 예외 테스트2")
+    void testUpdateOrderException2() {
+        try{
+            when(orderRepository.findById(order3.getOrderId())).thenReturn(Optional.of(order3));
+
+            orderService.updateOrder(order3.getOrderId(), orderUpdateReqDto);
+        }catch (OrderUpdateException e) {
+            verify(orderRepository, never()).update(any());
+        }
+    }
+
+    @Test
+    @DisplayName("주문 수정 테스트")
+    void testUpdateOrder() {
+        when(orderRepository.findById(order.getOrderId())).thenReturn(Optional.of(order));
+        when(orderRepository.update(any())).thenReturn(order);
+
+        orderService.updateOrder(order.getOrderId(), orderUpdateReqDto);
+        verify(orderRepository).update(any());
     }
 
 }
