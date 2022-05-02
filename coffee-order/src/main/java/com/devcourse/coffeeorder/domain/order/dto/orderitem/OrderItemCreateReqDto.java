@@ -11,14 +11,8 @@ public class OrderItemCreateReqDto {
     private int quantity;
 
     public OrderItemCreateReqDto(UUID productId, int quantity) {
-        if(productId == null) {
-            throw new WrongInputException("productId is required property!");
-        }
+        validateParams(productId, quantity);
         this.productId = productId;
-
-        if(quantity <= 0) {
-            throw new WrongInputException("quantity > 0");
-        }
         this.quantity = quantity;
     }
 
@@ -38,5 +32,14 @@ public class OrderItemCreateReqDto {
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();
+    }
+
+    private void validateParams(UUID productId, int quantity) {
+        if(productId == null) {
+            throw new WrongInputException("productId is required property!");
+        }
+        if(quantity <= 0) {
+            throw new WrongInputException("quantity > 0");
+        }
     }
 }

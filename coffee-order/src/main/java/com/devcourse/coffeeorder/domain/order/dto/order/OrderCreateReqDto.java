@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemCreateReqDto;
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
+import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
 import com.devcourse.coffeeorder.global.exception.WrongInputException;
 import org.springframework.util.StringUtils;
 
@@ -17,24 +18,10 @@ public class OrderCreateReqDto {
     private List<OrderItemCreateReqDto> orderItems;
 
     public OrderCreateReqDto(String email, String address, String postcode, List<OrderItemCreateReqDto> orderItems) {
-        if(!StringUtils.hasText(email)) {
-            throw new WrongInputException("email is required property!");
-        }
+        validateParams(email, address, postcode, orderItems);
         this.email = email;
-
-        if(!StringUtils.hasText(address)) {
-            throw new WrongInputException("address is required property!");
-        }
         this.address = address;
-
-        if(!StringUtils.hasText(postcode)) {
-            throw new WrongInputException("postcode is required property!");
-        }
         this.postcode = postcode;
-
-        if(orderItems == null || orderItems.size() == 0) {
-            throw new WrongInputException("orderItems must have at least 1 element");
-        }
         this.orderItems = orderItems;
     }
 
@@ -95,5 +82,20 @@ public class OrderCreateReqDto {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
+    }
+
+    private void validateParams(String email, String address, String postcode, List<OrderItemCreateReqDto> orderItems) {
+        if(!StringUtils.hasText(email)) {
+            throw new WrongInputException("email is required property!");
+        }
+        if(!StringUtils.hasText(address)) {
+            throw new WrongInputException("address is required property!");
+        }
+        if(!StringUtils.hasText(postcode)) {
+            throw new WrongInputException("postcode is required property!");
+        }
+        if(orderItems == null || orderItems.size() == 0) {
+            throw new WrongInputException("orderItems must have at least 1 element");
+        }
     }
 }

@@ -15,18 +15,7 @@ public class ProductReqDto {
     private String description;
 
     public ProductReqDto(String productName, Category category, long price, String description) {
-        if(!StringUtils.hasText(productName)) {
-            throw new WrongInputException("productName is required property!");
-        }
-
-        if(category == null) {
-            throw new WrongInputException("category is required property!");
-        }
-
-        if(price < 0) {
-            throw new WrongInputException("price accept positive number and 0!");
-        }
-
+        validateParams(productName, category, price);
         this.productName = productName;
         this.category = category;
         this.price = price;
@@ -94,5 +83,19 @@ public class ProductReqDto {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
+    }
+
+    private void validateParams(String productName, Category category, long price) {
+        if(!StringUtils.hasText(productName)) {
+            throw new WrongInputException("productName is required property!");
+        }
+
+        if(category == null) {
+            throw new WrongInputException("category is required property!");
+        }
+
+        if(price < 0) {
+            throw new WrongInputException("price accept positive number and 0!");
+        }
     }
 }
