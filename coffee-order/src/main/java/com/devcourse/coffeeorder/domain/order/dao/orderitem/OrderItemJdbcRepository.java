@@ -40,7 +40,7 @@ public class OrderItemJdbcRepository implements OrderItemRepository {
     }
 
     @Override
-    public List<OrderItem> findByIdWithProduct(UUID orderId) {
+    public List<OrderItem> findByOrderIdWithProduct(UUID orderId) {
         return jdbcTemplate.query("SELECT * FROM order_items JOIN products ON order_items.product_id = products.product_id WHERE order_items.order_id = UUID_TO_BIN(:orderId) ORDER BY order_items.seq",
                 Collections.singletonMap("orderId", orderId.toString().getBytes()),
                 orderItemWithProductRowMapper);

@@ -85,7 +85,7 @@ class OrderItemJdbcRepositoryTest {
     @Order(2)
     @DisplayName("주문 상품 생성 및 조회")
     void testFindByIdWithProduct() {
-        List<OrderItem> orderItems = orderItemRepository.findByIdWithProduct(order.getOrderId());
+        List<OrderItem> orderItems = orderItemRepository.findByOrderIdWithProduct(order.getOrderId());
 
         assertThat(orderItems.get(0).getOrderItemId(), is(1L));
         assertThat(orderItems.get(0).getProduct().getCategory(), is(Category.COFFEE_BEAN_PACKAGE));

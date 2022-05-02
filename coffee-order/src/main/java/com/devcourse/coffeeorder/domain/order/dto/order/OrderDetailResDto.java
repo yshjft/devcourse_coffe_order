@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemWithProductResDto;
+import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemWithProductDetailResDto;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
 
 public class OrderDetailResDto {
@@ -13,11 +13,11 @@ public class OrderDetailResDto {
     private String address;
     private String postcode;
     private OrderStatus orderStatus;
-    private List<OrderItemWithProductResDto> orderItems;
+    private List<OrderItemWithProductDetailResDto> orderItems;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public OrderDetailResDto(UUID orderId, String email, String address, String postcode, OrderStatus orderStatus, List<OrderItemWithProductResDto> orderItems, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public OrderDetailResDto(UUID orderId, String email, String address, String postcode, OrderStatus orderStatus, List<OrderItemWithProductDetailResDto> orderItems, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.orderId = orderId;
         this.email = email;
         this.address = address;
@@ -38,7 +38,7 @@ public class OrderDetailResDto {
         private String address;
         private String postcode;
         private OrderStatus orderStatus;
-        private List<OrderItemWithProductResDto> orderItems;
+        private List<OrderItemWithProductDetailResDto> orderItems;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -67,7 +67,7 @@ public class OrderDetailResDto {
             return this;
         }
 
-        public OrderDetailResDtoBuilder orderItems(List<OrderItemWithProductResDto> orderItems) {
+        public OrderDetailResDtoBuilder orderItems(List<OrderItemWithProductDetailResDto> orderItems) {
             this.orderItems = orderItems;
             return this;
         }
@@ -107,7 +107,7 @@ public class OrderDetailResDto {
         return orderStatus;
     }
 
-    public List<OrderItemWithProductResDto> getOrderItems() {
+    public List<OrderItemWithProductDetailResDto> getOrderItems() {
         return orderItems;
     }
 

@@ -25,11 +25,11 @@ public class OrderController {
     // 조회
     @GetMapping("/orders")
     public String viewOrdersPage(Model model) {
-        List<OrderResDto> acceptedOrders = orderService.getOrderByStatus(OrderStatus.ORDER_ACCEPTED);
-        List<OrderResDto> preparingOrders = orderService.getOrderByStatus(OrderStatus.PREPARING_FOR_SHIPMENT);
-        List<OrderResDto> onDeliveryOrders = orderService.getOrderByStatus(OrderStatus.ON_DELIVERY);
-        List<OrderResDto> deliveryOverOrders = orderService.getOrderByStatus(OrderStatus.DELIVERY_OVER);
-        List<OrderResDto> cancelledOrders = orderService.getOrderByStatus(OrderStatus.ORDER_CANCELLED);
+        List<OrderResDto> acceptedOrders = orderService.getOrdersByStatus(OrderStatus.ORDER_ACCEPTED).getOrders();
+        List<OrderResDto> preparingOrders = orderService.getOrdersByStatus(OrderStatus.PREPARING_FOR_SHIPMENT).getOrders();
+        List<OrderResDto> onDeliveryOrders = orderService.getOrdersByStatus(OrderStatus.ON_DELIVERY).getOrders();
+        List<OrderResDto> deliveryOverOrders = orderService.getOrdersByStatus(OrderStatus.DELIVERY_OVER).getOrders();
+        List<OrderResDto> cancelledOrders = orderService.getOrdersByStatus(OrderStatus.ORDER_CANCELLED).getOrders();
 
         model.addAttribute("acceptedOrders", acceptedOrders);
         model.addAttribute("preparingOrders", preparingOrders);
@@ -42,7 +42,7 @@ public class OrderController {
 
     @GetMapping("/orders/{orderId}")
     public String viewOrderPage(@PathVariable UUID orderId, Model model) {
-        OrderDetailResDto orderDetailResDto = orderService.getOrderDetail(orderId);
+        OrderDetailResDto orderDetailResDto = orderService.getOrder(orderId);
 
         model.addAttribute("orderStatuses", OrderStatus.values());
         model.addAttribute("order", orderDetailResDto);

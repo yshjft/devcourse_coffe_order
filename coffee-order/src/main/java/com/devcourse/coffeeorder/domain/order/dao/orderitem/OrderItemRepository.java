@@ -10,5 +10,5 @@ public interface OrderItemRepository {
 
     List<OrderItem> findAll();
 
-    List<OrderItem> findByIdWithProduct(UUID orderId);
+    List<OrderItem> findByOrderIdWithProduct(UUID orderId);
 }

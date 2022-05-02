@@ -86,6 +86,15 @@ class OrderJdbcRepositoryTest {
 
     @Test
     @org.junit.jupiter.api.Order(4)
+    @DisplayName("email에 의한 주문 조회")
+    void testFindByEmail() {
+        List<Order> orderList = orderRepository.findByEmail(order.getEmail());
+
+        assertThat(orderList.size(), is(2));
+    }
+
+    @Test
+    @org.junit.jupiter.api.Order(5)
     @DisplayName("주문 접수 -> 주문 준비 중 by time")
     void testUpdateOrderStatusByTime() {
         LocalDateTime testTime = LocalDateTime.now().plusHours(2);
@@ -97,7 +106,7 @@ class OrderJdbcRepositoryTest {
     }
 
     @Test
-    @org.junit.jupiter.api.Order(5)
+    @org.junit.jupiter.api.Order(6)
     @DisplayName("주문 상태 변경 by ID")
     void testUpdateOrderStatusById() {
         Order retrievedOrder = orderRepository.findById(order.getOrderId()).get();

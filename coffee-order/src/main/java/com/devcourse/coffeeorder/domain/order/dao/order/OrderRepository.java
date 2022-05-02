@@ -17,6 +17,8 @@ public interface OrderRepository {
 
     Optional<Order> findById(UUID orderId);
 
+    List<Order> findByEmail(String email);
+
     Order update(Order order);
 
     void orderAcceptedToPreparingForShipment(LocalDateTime time);

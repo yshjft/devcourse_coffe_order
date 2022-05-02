@@ -52,7 +52,7 @@ public class TestData {
 
     public static Order order = Order.builder()
             .orderId(UUID.randomUUID())
-            .email("test@test.com")
+            .email("tester@test.com")
             .address("경기도 용인시 처이군 ~~")
             .postcode("12345")
             .orderStatus(OrderStatus.ORDER_ACCEPTED)

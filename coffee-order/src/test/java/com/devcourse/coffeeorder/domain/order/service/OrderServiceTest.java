@@ -36,9 +36,9 @@ class OrderServiceTest {
         try {
             when(orderRepository.findById(orderId)).thenThrow(new OrderNotFoundException());
 
-            orderService.getOrderDetail(orderId);
+            orderService.getOrder(orderId);
         }catch (OrderNotFoundException e) {
-            verify(orderItemRepository, never()).findByIdWithProduct(orderId);
+            verify(orderItemRepository, never()).findByOrderIdWithProduct(orderId);
         }
     }
 
@@ -46,10 +46,33 @@ class OrderServiceTest {
     @DisplayName("주문 상세 조회 테스트")
     void testGetOrderDetail() {
         when(orderRepository.findById(order.getOrderId())).thenReturn(Optional.of(order));
-        when(orderItemRepository.findByIdWithProduct(order.getOrderId())).thenReturn(Arrays.asList(orderItem3, orderItem4));
+        when(orderItemRepository.findByOrderIdWithProduct(order.getOrderId())).thenReturn(Arrays.asList(orderItem3, orderItem4));
 
-        orderService.getOrderDetail(order.getOrderId());
+        orderService.getOrder(order.getOrderId());
 
-        verify(orderItemRepository).findByIdWithProduct(order.getOrderId());
+        verify(orderItemRepository).findByOrderIdWithProduct(order.getOrderId());
     }
+
+    @Test
+    @DisplayName("email을 통한 주문 조회 예외 테스트")
+    void testGetOrdersByEmailException() {
+        try{
+            when(orderRepository.findByEmail(order.getEmail())).thenThrow(new OrderNotFoundException());
+            orderService.getOrdersByEmail(order.getEmail());
+        }catch (OrderNotFoundException e) {
+            verify(orderItemRepository, never()).findByOrderIdWithProduct(order.getOrderId());
+        }
+    }
+
+    @Test
+    @DisplayName("email을 통한 주문 조회 테스트")
+    void testGetOrdersByEmail() {
+        when(orderRepository.findByEmail(order.getEmail())).thenReturn(Arrays.asList(order));
+        when(orderItemRepository.findByOrderIdWithProduct(order.getOrderId())).thenReturn(Arrays.asList(orderItem3, orderItem4));
+
+        orderService.getOrdersByEmail(order.getEmail());
+
+        verify(orderItemRepository).findByOrderIdWithProduct(order.getOrderId());
+    }
+
 }

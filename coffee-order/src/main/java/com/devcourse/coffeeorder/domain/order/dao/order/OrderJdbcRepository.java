@@ -60,6 +60,12 @@ public class OrderJdbcRepository implements OrderRepository {
     }
 
     @Override
+    public List<Order> findByEmail(String email) {
+        return jdbcTemplate.query("SELECT * FROM orders WHERE email = :email",
+                Collections.singletonMap("email", email), orderRowMapper);
+    }
+
+    @Override
     public Order update(Order order) {
         int update = jdbcTemplate.update("UPDATE orders SET address = :address, postcode = :postcode, order_status = :orderStatus, updated_at = :updatedAt WHERE order_id = UUID_TO_BIN(:orderId)",
                 toOrderParamMap(order));
