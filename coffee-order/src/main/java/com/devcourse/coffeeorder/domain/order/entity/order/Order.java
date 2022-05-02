@@ -105,12 +105,8 @@ public class Order {
         return updatedAt;
     }
 
-    public boolean isCancelable() {
-        return ORDER_ACCEPTED == this.orderStatus;
-    }
-
     public boolean isUpdatable() {
-        return ORDER_ACCEPTED == this.orderStatus || PREPARING_FOR_SHIPMENT == this.orderStatus;
+        return ORDER_ACCEPTED == this.orderStatus;
     }
 
     public void updateAddress(String address) {

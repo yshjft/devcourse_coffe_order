@@ -161,7 +161,7 @@ public class OrderService {
     public OrderUpdateResDto cancelOrder(UUID orderId, OrderStatus orderStatus) {
         Order order = orderFindById(orderId);
 
-        if(!order.isCancelable()) {
+        if(!order.isUpdatable()) {
             throw new OrderUpdateException(String.format("you can't cancel %s order", order.getOrderStatus()));
         }
 

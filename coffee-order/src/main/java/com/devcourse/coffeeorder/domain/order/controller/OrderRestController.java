@@ -64,6 +64,7 @@ public class OrderRestController {
                 .body(responseDto);
     }
 
+
     @PutMapping("/{orderId}/cancel")
     public ResponseEntity<ResponseDto> cancelOrderStatus(@PathVariable UUID orderId) {
         OrderUpdateResDto orderUpdateResDto = orderService.cancelOrder(orderId, ORDER_CANCELLED);
