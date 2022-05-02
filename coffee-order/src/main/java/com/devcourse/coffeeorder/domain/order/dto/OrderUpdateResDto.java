@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.domain.order.dto.order;
+package com.devcourse.coffeeorder.domain.order.dto;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

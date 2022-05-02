@@ -1,10 +1,10 @@
 package com.devcourse.coffeeorder.domain.order.controller;
 
-import static com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus.*;
+import static com.devcourse.coffeeorder.domain.order.entity.OrderStatus.*;
 
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.order.dto.order.*;
+import com.devcourse.coffeeorder.domain.order.dto.*;
 import com.devcourse.coffeeorder.domain.order.service.OrderService;
 import com.devcourse.coffeeorder.global.common.ResponseDto;
 import org.springframework.http.HttpStatus;

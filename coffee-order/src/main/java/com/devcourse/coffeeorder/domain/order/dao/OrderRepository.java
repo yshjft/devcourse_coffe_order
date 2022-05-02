@@ -1,12 +1,12 @@
-package com.devcourse.coffeeorder.domain.order.dao.order;
+package com.devcourse.coffeeorder.domain.order.dao;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.order.entity.order.Order;
-import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
+import com.devcourse.coffeeorder.domain.order.entity.Order;
+import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 
 public interface OrderRepository {
     Order create(Order order);

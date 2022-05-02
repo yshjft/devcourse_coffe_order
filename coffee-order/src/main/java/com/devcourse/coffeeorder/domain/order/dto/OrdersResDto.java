@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.domain.order.dto.order;
+package com.devcourse.coffeeorder.domain.order.dto;
 
 import com.devcourse.coffeeorder.global.common.MetaData;
 

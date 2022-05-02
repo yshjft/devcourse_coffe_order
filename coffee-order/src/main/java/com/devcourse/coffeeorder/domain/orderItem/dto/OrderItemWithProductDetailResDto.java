@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.domain.order.dto.orderitem;
+package com.devcourse.coffeeorder.domain.orderItem.dto;
 
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 

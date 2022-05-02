@@ -1,5 +1,6 @@
-package com.devcourse.coffeeorder.domain.order.entity.orderitem;
+package com.devcourse.coffeeorder.domain.orderItem.entity;
 
+import com.devcourse.coffeeorder.domain.order.entity.Order;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 
 import java.time.LocalDateTime;
@@ -10,16 +11,18 @@ public class OrderItem {
     private final UUID orderId;
     private final UUID productId;
     private int quantity;
-    private Product product;
+    private final Product product;
+    private final Order order;
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public OrderItem(Long orderItemId, UUID orderId, UUID productId, int quantity, Product product, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public OrderItem(Long orderItemId, UUID orderId, UUID productId, int quantity, Product product, Order order, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.orderItemId = orderItemId;
         this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;
         this.product = product;
+        this.order = order;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -34,6 +37,7 @@ public class OrderItem {
         private UUID productId;
         private int quantity;
         private Product product;
+        private Order order;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -62,6 +66,11 @@ public class OrderItem {
             return this;
         }
 
+        public OrderItemBuilder order(Order order) {
+            this.order = order;
+            return this;
+        }
+
         public OrderItemBuilder createdAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
@@ -73,11 +82,11 @@ public class OrderItem {
         }
 
         public OrderItem build() {
-            return new OrderItem(orderItemId, orderId, productId, quantity, product, createdAt, updatedAt);
+            return new OrderItem(orderItemId, orderId, productId, quantity, product, order, createdAt, updatedAt);
         }
     }
 
-    public long getOrderItemId() {
+    public Long getOrderItemId() {
         return orderItemId;
     }
 
@@ -95,6 +104,10 @@ public class OrderItem {
 
     public Product getProduct() {
         return product;
+    }
+
+    public Order getOrder() {
+        return order;
     }
 
     public LocalDateTime getCreatedAt() {

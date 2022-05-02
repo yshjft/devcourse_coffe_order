@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.domain.order.entity.order;
+package com.devcourse.coffeeorder.domain.order.entity;
 
 public enum OrderStatus {
     ORDER_ACCEPTED("order-accepted", "접수 완료"),

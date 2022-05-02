@@ -3,9 +3,9 @@ package com.devcourse.coffeeorder.domain.order.controller;
 import java.util.List;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.order.dto.order.OrderDetailResDto;
-import com.devcourse.coffeeorder.domain.order.dto.order.OrderResDto;
-import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
+import com.devcourse.coffeeorder.domain.order.dto.OrderDetailResDto;
+import com.devcourse.coffeeorder.domain.order.dto.OrderResDto;
+import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 import com.devcourse.coffeeorder.domain.order.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

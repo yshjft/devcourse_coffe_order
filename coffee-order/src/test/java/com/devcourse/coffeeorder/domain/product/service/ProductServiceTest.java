@@ -1,16 +1,13 @@
 package com.devcourse.coffeeorder.domain.product.service;
 
 
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.devcourse.coffeeorder.domain.product.dao.ProductRepository;
 import com.devcourse.coffeeorder.domain.product.dto.ProductReqDto;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
-import com.devcourse.coffeeorder.global.exception.ProductNotFoundException;
+import com.devcourse.coffeeorder.global.exception.notfound.ProductNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

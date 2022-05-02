@@ -1,9 +1,9 @@
 package com.devcourse.coffeeorder;
 
-import com.devcourse.coffeeorder.domain.order.dto.order.OrderUpdateReqDto;
-import com.devcourse.coffeeorder.domain.order.entity.order.Order;
-import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
-import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
+import com.devcourse.coffeeorder.domain.order.dto.OrderUpdateReqDto;
+import com.devcourse.coffeeorder.domain.order.entity.Order;
+import com.devcourse.coffeeorder.domain.orderItem.entity.OrderItem;
+import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 
@@ -102,6 +102,7 @@ public class TestData {
             .orderId(order.getOrderId())
             .productId(coffee.getProductId())
             .quantity(3)
+            .order(order)
             .product(coffee)
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())
@@ -111,6 +112,7 @@ public class TestData {
             .orderItemId(2L)
             .productId(cookie.getProductId())
             .quantity(10)
+            .order(order)
             .product(cookie)
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())

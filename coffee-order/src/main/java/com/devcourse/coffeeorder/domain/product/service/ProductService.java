@@ -5,7 +5,7 @@ import com.devcourse.coffeeorder.domain.product.dto.*;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 import com.devcourse.coffeeorder.global.common.MetaData;
-import com.devcourse.coffeeorder.global.exception.ProductNotFoundException;
+import com.devcourse.coffeeorder.global.exception.notfound.ProductNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.domain.order.dao.order;
+package com.devcourse.coffeeorder.domain.order.dao;
 
 import static com.devcourse.coffeeorder.global.util.Util.toLocalDateTime;
 import static com.devcourse.coffeeorder.global.util.Util.toUUID;
@@ -6,8 +6,8 @@ import static com.devcourse.coffeeorder.global.util.Util.toUUID;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import com.devcourse.coffeeorder.domain.order.entity.order.Order;
-import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
+import com.devcourse.coffeeorder.domain.order.entity.Order;
+import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 import com.devcourse.coffeeorder.global.exception.CreationException;
 import com.devcourse.coffeeorder.global.exception.UpdateException;
 import org.springframework.dao.EmptyResultDataAccessException;

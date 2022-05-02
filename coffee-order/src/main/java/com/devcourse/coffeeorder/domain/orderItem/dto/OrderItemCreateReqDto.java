@@ -1,6 +1,6 @@
-package com.devcourse.coffeeorder.domain.order.dto.orderitem;
+package com.devcourse.coffeeorder.domain.orderItem.dto;
 
-import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
+import com.devcourse.coffeeorder.domain.orderItem.entity.OrderItem;
 import com.devcourse.coffeeorder.global.exception.WrongInputException;
 
 import java.time.LocalDateTime;

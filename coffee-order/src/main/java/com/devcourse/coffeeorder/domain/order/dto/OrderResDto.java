@@ -1,11 +1,11 @@
-package com.devcourse.coffeeorder.domain.order.dto.order;
+package com.devcourse.coffeeorder.domain.order.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemWithProductResDto;
-import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
+import com.devcourse.coffeeorder.domain.orderItem.dto.OrderItemWithProductResDto;
+import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

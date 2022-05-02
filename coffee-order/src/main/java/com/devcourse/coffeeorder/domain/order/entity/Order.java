@@ -1,6 +1,6 @@
-package com.devcourse.coffeeorder.domain.order.entity.order;
+package com.devcourse.coffeeorder.domain.order.entity;
 
-import static com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus.*;
+import static com.devcourse.coffeeorder.domain.order.entity.OrderStatus.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

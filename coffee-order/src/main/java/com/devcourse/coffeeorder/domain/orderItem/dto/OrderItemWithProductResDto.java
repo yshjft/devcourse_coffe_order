@@ -1,8 +1,4 @@
-package com.devcourse.coffeeorder.domain.order.dto.orderitem;
-
-import com.devcourse.coffeeorder.domain.product.entity.Category;
-
-import java.util.UUID;
+package com.devcourse.coffeeorder.domain.orderItem.dto;
 
 public class OrderItemWithProductResDto {
     private int quantity;

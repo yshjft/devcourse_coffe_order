@@ -9,8 +9,9 @@ import static org.hamcrest.MatcherAssert.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.devcourse.coffeeorder.domain.order.entity.order.Order;
-import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
+import com.devcourse.coffeeorder.domain.order.dao.OrderRepository;
+import com.devcourse.coffeeorder.domain.order.entity.Order;
+import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.ScriptResolver;
 import com.wix.mysql.config.Charset;

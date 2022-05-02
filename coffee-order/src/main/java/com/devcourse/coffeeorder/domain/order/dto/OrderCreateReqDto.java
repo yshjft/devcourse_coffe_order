@@ -1,12 +1,12 @@
-package com.devcourse.coffeeorder.domain.order.dto.order;
+package com.devcourse.coffeeorder.domain.order.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemCreateReqDto;
-import com.devcourse.coffeeorder.domain.order.entity.order.Order;
-import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
+import com.devcourse.coffeeorder.domain.orderItem.dto.OrderItemCreateReqDto;
+import com.devcourse.coffeeorder.domain.order.entity.Order;
+import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 import com.devcourse.coffeeorder.global.exception.WrongInputException;
 import org.springframework.util.StringUtils;
 
