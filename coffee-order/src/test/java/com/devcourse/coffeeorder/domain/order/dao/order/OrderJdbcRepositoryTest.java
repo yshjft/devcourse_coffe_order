@@ -77,6 +77,15 @@ class OrderJdbcRepositoryTest {
 
     @Test
     @org.junit.jupiter.api.Order(3)
+    @DisplayName("id에 의한 주문 조회")
+    void testFindById() {
+        Order retrievedOrder = orderRepository.findById(order.getOrderId()).get();
+
+        assertThat(retrievedOrder, samePropertyValuesAs(order));
+    }
+
+    @Test
+    @org.junit.jupiter.api.Order(4)
     @DisplayName("주문 접수 -> 주문 준비 중 by time")
     void testUpdateOrderStatusByTime() {
         LocalDateTime testTime = LocalDateTime.now().plusHours(2);
@@ -87,20 +96,16 @@ class OrderJdbcRepositoryTest {
         assertThat(orders.get(0).getUpdatedAt(), not(orders.get(0).getCreatedAt()));
     }
 
-    // @Test
-    @org.junit.jupiter.api.Order(4)
+    @Test
+    @org.junit.jupiter.api.Order(5)
     @DisplayName("주문 상태 변경 by ID")
     void testUpdateOrderStatusById() {
-
-    }
-
-    // @Test
-    @org.junit.jupiter.api.Order(5)
-    @DisplayName("id에 의한 주문 조회")
-    void testFindById() {
         Order retrievedOrder = orderRepository.findById(order.getOrderId()).get();
 
-        assertThat(retrievedOrder, samePropertyValuesAs(order));
-    }
+        retrievedOrder.updateOrderStatus(OrderStatus.ORDER_ACCEPTED);
+        orderRepository.update(retrievedOrder);
 
+        retrievedOrder = orderRepository.findById(order.getOrderId()).get();
+        assertThat(retrievedOrder.getOrderStatus(), is(OrderStatus.ORDER_ACCEPTED));
+    }
 }

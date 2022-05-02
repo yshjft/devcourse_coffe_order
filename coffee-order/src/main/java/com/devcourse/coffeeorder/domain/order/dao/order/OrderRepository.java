@@ -17,8 +17,6 @@ public interface OrderRepository {
 
     Optional<Order> findById(UUID orderId);
 
-    void updateStatusById(UUID orderId, OrderStatus orderStatus);
-
     Order update(Order order);
 
     void orderAcceptedToPreparingForShipment(LocalDateTime time);

@@ -60,27 +60,20 @@ public class OrderJdbcRepository implements OrderRepository {
     }
 
     @Override
-    @Deprecated
-    public void updateStatusById( UUID orderId, OrderStatus orderStatus) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("orderStatus", orderStatus.toString());
-        map.put("orderId", orderId.toString().getBytes());
-
-        int update = jdbcTemplate.update("UPDATE orders set order_status = :orderStatus where order_id = UUID_TO_BIN(:orderId)", map);
+    public Order update(Order order) {
+        int update = jdbcTemplate.update("UPDATE orders SET address = :address, postcode = :postcode, order_status = :orderStatus, updated_at = :updatedAt WHERE order_id = UUID_TO_BIN(:orderId)",
+                toOrderParamMap(order));
 
         if(update != 1) {
-            throw new UpdateException(String.format("failed to update order status(order: %s)", orderId.toString()));
+            throw new UpdateException(String.format("failed to update order(%s)", order.getOrderId().toString()));
         }
-    }
 
-    @Override
-    public Order update(Order order) {
-        return null;
+        return order;
     }
 
     @Override
     public void orderAcceptedToPreparingForShipment(LocalDateTime time) {
-        jdbcTemplate.update("UPDATE orders set order_status = 'PREPARING_FOR_SHIPMENT', updated_at = NOW() where created_at <= :time and order_status = 'ORDER_ACCEPTED'",
+        jdbcTemplate.update("UPDATE orders SET order_status = 'PREPARING_FOR_SHIPMENT', updated_at = NOW() WHERE created_at <= :time and order_status = 'ORDER_ACCEPTED'",
                 Collections.singletonMap("time", time));
     }
 
@@ -105,7 +98,7 @@ public class OrderJdbcRepository implements OrderRepository {
     });
 
     private Map<String, Object> toOrderParamMap(Order order) {
-        var paramMap = new HashMap<String, Object>();
+        Map<String, Object> paramMap = new HashMap();
         paramMap.put("orderId", order.getOrderId().toString().getBytes());
         paramMap.put("email", order.getEmail());
         paramMap.put("address", order.getAddress());

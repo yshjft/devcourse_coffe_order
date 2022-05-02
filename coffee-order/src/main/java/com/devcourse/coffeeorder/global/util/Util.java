@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Util {
     public static UUID toUUID(byte[] bytes) {
-        var byteBuffer = ByteBuffer.wrap(bytes);
+        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
         return new UUID(byteBuffer.getLong(), byteBuffer.getLong());
     }
 

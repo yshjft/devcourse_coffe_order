@@ -15,7 +15,7 @@ public class ProductReqDto {
     private String description;
 
     public ProductReqDto(String productName, Category category, long price, String description) {
-        if(StringUtils.hasText(productName)) {
+        if(!StringUtils.hasText(productName)) {
             throw new WrongInputException("productName is required property!");
         }
 

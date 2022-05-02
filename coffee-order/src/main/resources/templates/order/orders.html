@@ -36,7 +36,7 @@
                     <a th:href="@{'/orders/'+ *{orderId}}" th:text="*{orderId}"></a>
                 </td>
                 <td th:text="*{email}"></td>
-                <td th:text="*{orderStatus}"></td>
+                <td th:text="*{orderStatus.getKorName()}"></td>
                 <td th:text="*{createdAt}"></td>
             </tr>
             </tbody>
@@ -60,7 +60,7 @@
                     <a th:href="@{'/orders/'+ *{orderId}}" th:text="*{orderId}"></a>
                 </td>
                 <td th:text="*{email}"></td>
-                <td th:text="*{orderStatus}"></td>
+                <td th:text="*{orderStatus.getKorName()}"></td>
                 <td th:text="*{createdAt}"></td>
             </tr>
             </tbody>
@@ -84,7 +84,7 @@
                     <a th:href="@{'/orders/'+ *{orderId}}" th:text="*{orderId}"></a>
                 </td>
                 <td th:text="*{email}"></td>
-                <td th:text="*{orderStatus}"></td>
+                <td th:text="*{orderStatus.getKorName()}"></td>
                 <td th:text="*{createdAt}"></td>
             </tr>
             </tbody>
@@ -108,7 +108,7 @@
                     <a th:href="@{'/orders/'+ *{orderId}}" th:text="*{orderId}"></a>
                 </td>
                 <td th:text="*{email}"></td>
-                <td th:text="*{orderStatus}"></td>
+                <td th:text="*{orderStatus.getKorName()}"></td>
                 <td th:text="*{createdAt}"></td>
             </tr>
             </tbody>
@@ -132,7 +132,7 @@
                     <a th:href="@{'/orders/'+ *{orderId}}" th:text="*{orderId}"></a>
                 </td>
                 <td th:text="*{email}"></td>
-                <td th:text="*{orderStatus}"></td>
+                <td th:text="*{orderStatus.getKorName()}"></td>
                 <td th:text="*{createdAt}"></td>
             </tr>
             </tbody>

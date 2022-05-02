@@ -32,7 +32,7 @@ public class OrderService {
     @Transactional
     public OrderCreateResDto createOrder(OrderCreateReqDto orderCreateReqDto) {
         Order order = orderCreateReqDto.toEntity();
-        List<OrderItem> orderItemList =  orderCreateReqDto.getOrderItems().stream()
+        List<OrderItem> orderItemList = orderCreateReqDto.getOrderItems().stream()
                 .map(orderItemCreateReqDto -> orderItemCreateReqDto.toEntity(order.getOrderId(), order.getCreatedAt(), order.getUpdatedAt()))
                 .collect(Collectors.toList());
 
@@ -81,9 +81,12 @@ public class OrderService {
     }
 
     public OrderUpdateResDto updateOrderStatus(UUID orderId, OrderStatus orderStatus) {
-        // 조회
-        // update
-        return new OrderUpdateResDto(orderId, null);
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId.toString()));
+
+        order.updateOrderStatus(orderStatus);
+        Order updatedOrder = orderRepository.update(order);
+
+        return new OrderUpdateResDto(orderId, updatedOrder.getUpdatedAt());
     }
 
     @Scheduled(cron = "05 00 14 * * ?")

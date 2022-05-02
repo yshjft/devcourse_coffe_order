@@ -101,7 +101,7 @@ public class OrderItemJdbcRepository implements OrderItemRepository {
     });
 
     private Map<String, Object> toOrderItemParamMap(OrderItem orderItem) {
-        var paramMap = new HashMap<String, Object>();
+        Map<String, Object> paramMap = new HashMap();
         paramMap.put("orderId", orderItem.getOrderId().toString().getBytes());
         paramMap.put("productId", orderItem.getProductId().toString().getBytes());
         paramMap.put("quantity", orderItem.getQuantity());

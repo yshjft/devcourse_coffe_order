@@ -21,8 +21,20 @@
             <p th:text="${'주소: '+order.address}" class="card-text"></p>
             <p th:text="${'우편번호: '+order.postcode}" class="card-text"></p>
 
-            <p th:text="${'배송 상태: '+order.orderStatus.getKorName()}" class="card-text"></p>
-
+            <form th:action="@{'/orders/status/update/'+${order.orderId}}" method="post">
+                <div class="mb-3">
+                    <label for="inputOrderStatus" class="form-label">배송 상태</label>
+                    <div>
+                        <select name = "orderStatus" th:value="${order.orderStatus}" id="inputOrderStatus">
+                            <option th:each="orderStatus : ${orderStatuses}"
+                                    th:selected="${orderStatus == order.orderStatus}"
+                                    th:value="${orderStatus}"
+                                    th:text="${orderStatus.getKorName()}"></option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">배송 상태 변경</button>
+                    </div>
+                </div>
+            </form>
 
             <p th:text="${'생성일: '+order.createdAt}" class="card-text"></p>
             <p th:text="${'수정일: '+order.updatedAt}" class="card-text"></p>
