@@ -19,5 +19,7 @@ public interface OrderRepository {
 
     void updateStatusById(UUID orderId, OrderStatus orderStatus);
 
+    Order update(Order order);
+
     void orderAcceptedToPreparingForShipment(LocalDateTime time);
 }

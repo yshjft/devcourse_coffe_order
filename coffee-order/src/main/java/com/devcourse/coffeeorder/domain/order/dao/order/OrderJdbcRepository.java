@@ -59,8 +59,8 @@ public class OrderJdbcRepository implements OrderRepository {
         }
     }
 
-    // updateById
     @Override
+    @Deprecated
     public void updateStatusById( UUID orderId, OrderStatus orderStatus) {
         Map<String, Object> map = new HashMap<>();
         map.put("orderStatus", orderStatus.toString());
@@ -74,8 +74,13 @@ public class OrderJdbcRepository implements OrderRepository {
     }
 
     @Override
+    public Order update(Order order) {
+        return null;
+    }
+
+    @Override
     public void orderAcceptedToPreparingForShipment(LocalDateTime time) {
-        jdbcTemplate.update("UPDATE orders set order_status = 'PREPARING_FOR_SHIPMENT' where created_at <= :time and order_status = 'ORDER_ACCEPTED'",
+        jdbcTemplate.update("UPDATE orders set order_status = 'PREPARING_FOR_SHIPMENT', updated_at = NOW() where created_at <= :time and order_status = 'ORDER_ACCEPTED'",
                 Collections.singletonMap("time", time));
     }
 
