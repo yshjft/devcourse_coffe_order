@@ -1,6 +1,6 @@
-package com.devcourse.coffeeorder.domain.product.controller;
+package com.devcourse.coffeeorder.domain.product.controller.product;
 
-import com.devcourse.coffeeorder.domain.product.dto.ProductsResDto;
+import com.devcourse.coffeeorder.domain.product.dto.product.ProductsResDto;
 import com.devcourse.coffeeorder.domain.product.service.ProductService;
 import com.devcourse.coffeeorder.global.common.ResponseDto;
 import org.springframework.http.HttpStatus;

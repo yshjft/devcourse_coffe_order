@@ -16,9 +16,11 @@ import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemWithProduct
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
+import com.devcourse.coffeeorder.domain.product.dao.product.ProductRepository;
 import com.devcourse.coffeeorder.global.common.MetaData;
 import com.devcourse.coffeeorder.global.exception.notfound.OrderNotFoundException;
-import com.devcourse.coffeeorder.global.exception.OrderUpdateException;
+import com.devcourse.coffeeorder.global.exception.badrequest.OrderException;
+import com.devcourse.coffeeorder.global.exception.notfound.ProductNotFoundException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final ProductRepository productRepository;
 
-    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository) {
+    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
+        this.productRepository = productRepository;
     }
 
     /**
@@ -39,9 +43,13 @@ public class OrderService {
     @Transactional
     public OrderCreateResDto createOrder(OrderCreateReqDto orderCreateReqDto) {
         Order order = orderCreateReqDto.toEntity();
-        List<OrderItem> orderItemList = orderCreateReqDto.getOrderItems().stream()
-                .map(orderItemCreateReqDto -> orderItemCreateReqDto.toEntity(order.getOrderId(), order.getCreatedAt(), order.getUpdatedAt()))
-                .collect(Collectors.toList());
+
+        List<OrderItem> orderItemList = new ArrayList<>();
+        orderCreateReqDto.getOrderItems().forEach(orderItemCreateReqDto -> {
+            productRepository.findById(orderItemCreateReqDto.getProductId())
+                    .orElseThrow(() -> new ProductNotFoundException(String.format("can't find a product(%s)", orderItemCreateReqDto.getProductId().toString())));
+            orderItemCreateReqDto.toEntity(order.getOrderId(), order.getCreatedAt(), order.getUpdatedAt());
+        });
 
         Order newOrder = orderRepository.create(order);
         orderItemList.forEach(orderItem -> orderItemRepository.create(orderItem));
@@ -133,7 +141,7 @@ public class OrderService {
         Order order = orderFindById(orderId);
 
         if(!order.isUpdatable()) {
-            throw new OrderUpdateException(String.format("you can't update %s order", order.getOrderStatus()));
+            throw new OrderException(String.format("you can't update %s order", order.getOrderStatus()));
         }
 
         order.updateAddress(orderUpdateReqDto.getAddress());
@@ -162,7 +170,7 @@ public class OrderService {
         Order order = orderFindById(orderId);
 
         if(!order.isUpdatable()) {
-            throw new OrderUpdateException(String.format("you can't cancel %s order", order.getOrderStatus()));
+            throw new OrderException(String.format("you can't cancel %s order", order.getOrderStatus()));
         }
 
         order.updateOrderStatus(orderStatus);

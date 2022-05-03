@@ -51,6 +51,12 @@ public class OrderItemJdbcRepository implements OrderItemRepository {
     }
 
     @Override
+    public List<OrderItem> findByProductId(UUID productId) {
+        return jdbcTemplate.query("SELECT * FROM order_items WHERE product_id = UUID_TO_BIN(:productId)",
+                Collections.singletonMap("productId", productId.toString().getBytes()), orderItemRowMapper);
+    }
+
+    @Override
     public Optional<OrderItem> findByOrderItemIdWithOrder(Long orderItemId) {
         try {
             return Optional.of(
@@ -105,7 +111,7 @@ public class OrderItemJdbcRepository implements OrderItemRepository {
         LocalDateTime updatedAt = toLocalDateTime(resultSet.getTimestamp("order_items.updated_at"));
 
         String productName = resultSet.getString("products.product_name");
-        Category category = Category.valueOf(resultSet.getString("products.category"));
+        String category = resultSet.getString("products.category");
         long price = resultSet.getLong("products.price");
         String description = resultSet.getString("products.description");
         LocalDateTime productCreatedAt = toLocalDateTime(resultSet.getTimestamp("products.created_at"));

@@ -7,7 +7,7 @@ import java.util.UUID;
 import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemCreateReqDto;
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
-import com.devcourse.coffeeorder.global.exception.WrongInputException;
+import com.devcourse.coffeeorder.global.exception.badrequest.WrongInputException;
 import org.springframework.util.StringUtils;
 
 import static com.devcourse.coffeeorder.global.util.Util.*;
@@ -26,33 +26,37 @@ public class OrderCreateReqDto {
         this.orderItems = orderItems;
     }
 
+    public static OrderCreateReqDtoBuilder builder() {
+        return new OrderCreateReqDtoBuilder();
+    }
+
     public static class OrderCreateReqDtoBuilder {
         private String email;
         private String address;
         private String postcode;
         private List<OrderItemCreateReqDto> orderItems;
 
-        OrderCreateReqDtoBuilder email(String email) {
+        public OrderCreateReqDtoBuilder email(String email) {
             this.email = email;
             return this;
         }
 
-        OrderCreateReqDtoBuilder address(String address) {
+        public OrderCreateReqDtoBuilder address(String address) {
             this.address = address;
             return this;
         }
 
-        OrderCreateReqDtoBuilder postcode(String postcode) {
+        public OrderCreateReqDtoBuilder postcode(String postcode) {
             this.postcode = postcode;
             return this;
         }
 
-        OrderCreateReqDtoBuilder orderItems(List<OrderItemCreateReqDto> orderItems) {
+        public OrderCreateReqDtoBuilder orderItems(List<OrderItemCreateReqDto> orderItems) {
             this.orderItems = orderItems;
             return this;
         }
 
-        OrderCreateReqDto build() {
+        public OrderCreateReqDto build() {
             return new OrderCreateReqDto(email, address, postcode, orderItems);
         }
     }

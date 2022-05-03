@@ -1,3 +1,9 @@
+CREATE TABLE categories
+(
+    category VARCHAR(50) PRIMARY KEY,
+    created_at datetime (6) NOT NULL
+);
+
 CREATE TABLE products
 (
     product_id   BINARY(16) PRIMARY KEY,
@@ -6,7 +12,8 @@ CREATE TABLE products
     price        bigint      NOT NULL,
     description  VARCHAR(500) DEFAULT NULL,
     created_at   datetime(6) NOT NULL,
-    updated_at   datetime(6)  DEFAULT NULL
+    updated_at   datetime(6)  DEFAULT NULL,
+    CONSTRAINT fk_products_to_categories FOREIGN KEY (category) REFERENCES categories (category)
 );
 
 CREATE TABLE orders
@@ -30,5 +37,6 @@ CREATE TABLE order_items
     updated_at datetime(6) DEFAULT NULL,
     INDEX (order_id),
     CONSTRAINT fk_order_items_to_order FOREIGN KEY (order_id) REFERENCES orders (order_id) ON DELETE CASCADE,
-    CONSTRAINT fk_order_items_to_product FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE
+    CONSTRAINT fk_order_items_to_product FOREIGN KEY (product_id) REFERENCES products (product_id)
 );
+

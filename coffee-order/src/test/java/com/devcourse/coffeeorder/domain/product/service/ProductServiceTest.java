@@ -3,8 +3,9 @@ package com.devcourse.coffeeorder.domain.product.service;
 
 import static org.mockito.Mockito.*;
 
-import com.devcourse.coffeeorder.domain.product.dao.ProductRepository;
-import com.devcourse.coffeeorder.domain.product.dto.ProductReqDto;
+import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
+import com.devcourse.coffeeorder.domain.product.dao.product.ProductRepository;
+import com.devcourse.coffeeorder.domain.product.dto.product.ProductReqDto;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 import com.devcourse.coffeeorder.global.exception.notfound.ProductNotFoundException;
@@ -15,7 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,6 +29,9 @@ class ProductServiceTest {
     @Mock
     ProductRepository productRepository;
 
+    @Mock
+    OrderItemRepository orderItemRepository;
+
     private UUID productId = UUID.randomUUID();
 
     private Product product = Product.builder()
@@ -36,7 +40,7 @@ class ProductServiceTest {
 
     private ProductReqDto productReqDto = ProductReqDto.builder()
             .productName("test")
-            .category(Category.COFFEE_BEAN_PACKAGE)
+            .category("커피")
             .price(1000)
             .description("커피 커피")
             .build();
@@ -81,6 +85,7 @@ class ProductServiceTest {
     @DisplayName("상품 삭제 테스트")
     void testDeleteProduct() {
         when(productRepository.findById(product.getProductId())).thenReturn(Optional.of(product));
+        when(orderItemRepository.findByProductId(product.getProductId())).thenReturn(Arrays.asList());
 
         productService.deleteProduct(product.getProductId());
 

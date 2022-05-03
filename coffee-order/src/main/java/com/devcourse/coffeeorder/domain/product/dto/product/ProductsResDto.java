@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.domain.product.dto;
+package com.devcourse.coffeeorder.domain.product.dto.product;
 
 import java.util.List;
 

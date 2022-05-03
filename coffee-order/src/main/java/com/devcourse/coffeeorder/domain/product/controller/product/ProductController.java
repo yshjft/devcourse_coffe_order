@@ -1,11 +1,14 @@
-package com.devcourse.coffeeorder.domain.product.controller;
+package com.devcourse.coffeeorder.domain.product.controller.product;
 
+import java.util.List;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.product.dto.ProductReqDto;
-import com.devcourse.coffeeorder.domain.product.dto.ProductResDto;
-import com.devcourse.coffeeorder.domain.product.dto.ProductsResDto;
+import com.devcourse.coffeeorder.domain.product.dto.category.CategoryDto;
+import com.devcourse.coffeeorder.domain.product.dto.product.ProductReqDto;
+import com.devcourse.coffeeorder.domain.product.dto.product.ProductResDto;
+import com.devcourse.coffeeorder.domain.product.dto.product.ProductsResDto;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
+import com.devcourse.coffeeorder.domain.product.service.CategoryService;
 import com.devcourse.coffeeorder.domain.product.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +17,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ProductController {
     private final ProductService productService;
+    private final CategoryService categoryService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     /**
@@ -24,7 +29,7 @@ public class ProductController {
      */
     @GetMapping("/products/new")
     public String viewNewProductsPage(Model model) {
-        model.addAttribute("categories", Category.values());
+        model.addAttribute("categories", getCategories());
         return "product/new-product";
     }
 
@@ -41,12 +46,12 @@ public class ProductController {
      * 상품 목록 조회 페이지
      */
     @GetMapping("/products")
-    public String viewProductsPage(@RequestParam(required = false) Category category, Model model) {
+    public String viewProductsPage(@RequestParam(required = false) String category, Model model) {
         ProductsResDto productsResDto = category == null ?
                 productService.findAllProducts() :
                 productService.findAllProductsByCategory(category);
 
-        model.addAttribute("categories", Category.values());
+        model.addAttribute("categories", getCategories());
         model.addAttribute("products", productsResDto.getProducts());
 
         return "product/products";
@@ -70,7 +75,7 @@ public class ProductController {
     public String viewProductUpdatePage(@PathVariable UUID productId, Model model) {
         ProductResDto productResDto = productService.findProduct(productId);
 
-        model.addAttribute("categories", Category.values());
+        model.addAttribute("categories", getCategories());
         model.addAttribute("product", productResDto);
         return "product/update-product";
     }
@@ -91,5 +96,9 @@ public class ProductController {
     public String deleteProduct(@PathVariable UUID productId) {
         productService.deleteProduct(productId);
         return "redirect:/products";
+    }
+
+    private List<CategoryDto> getCategories() {
+        return categoryService.getCategories().getCategories();
     }
 }

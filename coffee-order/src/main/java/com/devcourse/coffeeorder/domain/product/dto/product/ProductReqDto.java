@@ -1,20 +1,19 @@
-package com.devcourse.coffeeorder.domain.product.dto;
+package com.devcourse.coffeeorder.domain.product.dto.product;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
-import com.devcourse.coffeeorder.global.exception.WrongInputException;
+import com.devcourse.coffeeorder.global.exception.badrequest.WrongInputException;
 import org.springframework.util.StringUtils;
 
 public class ProductReqDto {
     private String productName;
-    private Category category;
+    private String category;
     private long price;
     private String description;
 
-    public ProductReqDto(String productName, Category category, long price, String description) {
+    public ProductReqDto(String productName, String category, long price, String description) {
         validateParams(productName, category, price);
         this.productName = productName;
         this.category = category;
@@ -28,7 +27,7 @@ public class ProductReqDto {
 
     public static class ProductReqDtoBuilder {
         private String productName;
-        private Category category;
+        private String category;
         private long price;
         private String description;
 
@@ -37,7 +36,7 @@ public class ProductReqDto {
             return this;
         }
 
-        public ProductReqDtoBuilder category(Category category) {
+        public ProductReqDtoBuilder category(String category) {
             this.category = category;
             return this;
         }
@@ -61,7 +60,7 @@ public class ProductReqDto {
         return productName;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
@@ -85,7 +84,7 @@ public class ProductReqDto {
                 .build();
     }
 
-    private void validateParams(String productName, Category category, long price) {
+    private void validateParams(String productName, String category, long price) {
         if(!StringUtils.hasText(productName)) {
             throw new WrongInputException("productName is required property!");
         }

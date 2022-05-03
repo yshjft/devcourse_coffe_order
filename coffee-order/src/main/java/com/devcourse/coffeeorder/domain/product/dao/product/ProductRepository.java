@@ -1,10 +1,9 @@
-package com.devcourse.coffeeorder.domain.product.dao;
+package com.devcourse.coffeeorder.domain.product.dao.product;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 
 public interface ProductRepository {
@@ -22,7 +21,7 @@ public interface ProductRepository {
     /**
      * 카테고리를 이용한 조회
      */
-    List<Product> findByCategory(Category category);
+    List<Product> findByCategory(String category);
 
     /**
      * productId를 이용한 조회

@@ -6,13 +6,13 @@ import java.util.UUID;
 public class Product {
     private final UUID productId;
     private String productName;
-    private Category category;
+    private String category;
     private long price;
     private String description;
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Product(UUID productId, String productName, Category category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Product(UUID productId, String productName, String category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.productId = productId;
         this.productName = productName;
         this.category = category;
@@ -29,7 +29,7 @@ public class Product {
     public static class ProductBuilder {
         private UUID productId;
         private String productName;
-        private Category category;
+        private String category;
         private long price;
         private String description;
         private LocalDateTime createdAt;
@@ -45,7 +45,7 @@ public class Product {
             return this;
         }
 
-        public ProductBuilder category(Category category) {
+        public ProductBuilder category(String category) {
             this.category = category;
             return this;
         }
@@ -84,7 +84,7 @@ public class Product {
         return productName;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
@@ -104,8 +104,7 @@ public class Product {
         return updatedAt;
     }
 
-
-    public void updateProduct(String productName, Category category, long price, String description) {
+    public void updateProduct(String productName, String category, long price, String description) {
         this.productName = productName;
         this.category = category;
         this.price = price;

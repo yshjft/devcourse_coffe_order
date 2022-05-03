@@ -7,14 +7,18 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.devcourse.coffeeorder.domain.order.dao.order.OrderRepository;
+import com.devcourse.coffeeorder.domain.order.dto.order.OrderCreateReqDto;
 import com.devcourse.coffeeorder.domain.order.dto.order.OrderUpdateReqDto;
+import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemCreateReqDto;
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
 import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
+import com.devcourse.coffeeorder.domain.product.dao.product.ProductRepository;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 import com.devcourse.coffeeorder.global.exception.notfound.OrderNotFoundException;
-import com.devcourse.coffeeorder.global.exception.OrderUpdateException;
+import com.devcourse.coffeeorder.global.exception.badrequest.OrderException;
+import com.devcourse.coffeeorder.global.exception.notfound.ProductNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,9 +37,20 @@ class OrderServiceTest {
     @Mock
     OrderItemRepository orderItemRepository;
 
+    @Mock
+    ProductRepository productRepository;
+
     private UUID orderId = UUID.randomUUID();
 
     private Product product = Product.builder().build();
+
+    private OrderItemCreateReqDto orderItemCreateReqDto = new OrderItemCreateReqDto(UUID.randomUUID(), 10);
+    private OrderCreateReqDto orderCreateReqDto = OrderCreateReqDto.builder()
+            .email("test@test.com")
+            .address("aa")
+            .postcode("123")
+            .orderItems(Arrays.asList(orderItemCreateReqDto))
+            .build();
 
     private OrderItem orderItem = OrderItem.builder()
             .product(product)
@@ -54,6 +69,19 @@ class OrderServiceTest {
             .build();
 
     private OrderUpdateReqDto orderUpdateReqDto = new OrderUpdateReqDto("경기도 수원시 ", "00000");
+
+    @Test
+    @DisplayName("주문 생성 ProductNotFoundException 테스트")
+    void testGetOrder() {
+        try {
+            when(productRepository.findById(orderItemCreateReqDto.getProductId())).thenThrow(new ProductNotFoundException());
+
+            orderService.createOrder(orderCreateReqDto);
+        }catch (ProductNotFoundException e) {
+            verify(orderItemRepository, never()).create(any());
+        }
+    }
+
 
     @Test
     @DisplayName("주문 상세 조회 OrderNotFoundException 테스트")
@@ -119,7 +147,7 @@ class OrderServiceTest {
             when(orderRepository.findById(orderCancelled.getOrderId())).thenReturn(Optional.of(orderCancelled));
 
             orderService.updateOrder(orderCancelled.getOrderId(), orderUpdateReqDto);
-        }catch (OrderUpdateException e) {
+        }catch (OrderException e) {
             verify(orderRepository, never()).update(any());
         }
     }

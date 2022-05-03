@@ -1,20 +1,18 @@
-package com.devcourse.coffeeorder.domain.product.dto;
+package com.devcourse.coffeeorder.domain.product.dto.product;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.product.entity.Category;
-
 public class ProductResDto {
     private UUID productId;
     private String productName;
-    private Category category;
+    private String category;
     private long price;
     private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ProductResDto(UUID productId, String productName, Category category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ProductResDto(UUID productId, String productName, String category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.productId = productId;
         this.productName = productName;
         this.category = category;
@@ -31,7 +29,7 @@ public class ProductResDto {
     public static class ProductResDtoBuilder {
         private UUID productId;
         private String productName;
-        private Category category;
+        private String category;
         private long price;
         private String description;
         private LocalDateTime createdAt;
@@ -47,7 +45,7 @@ public class ProductResDto {
             return this;
         }
 
-        public ProductResDtoBuilder category(Category category) {
+        public ProductResDtoBuilder category(String category) {
             this.category = category;
             return this;
         }
@@ -85,7 +83,7 @@ public class ProductResDto {
         return productName;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 

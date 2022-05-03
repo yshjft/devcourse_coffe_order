@@ -9,10 +9,10 @@ public class OrderItemWithProductDetailResDto {
     private int quantity;
     private UUID productId;
     private String productName;
-    private Category category;
+    private String category;
     private long price;
 
-    public OrderItemWithProductDetailResDto(Long orderItemId, int quantity, UUID productId, String productName, Category category, long price) {
+    public OrderItemWithProductDetailResDto(Long orderItemId, int quantity, UUID productId, String productName, String category, long price) {
         this.orderItemId = orderItemId;
         this.quantity = quantity;
         this.productId = productId;
@@ -30,7 +30,7 @@ public class OrderItemWithProductDetailResDto {
         private int quantity;
         private UUID productId;
         private String productName;
-        private Category category;
+        private String category;
         private long price;
 
         public OrderItemWithProductDetailResDtoBuilder orderItemId(Long orderItemId) {
@@ -53,7 +53,7 @@ public class OrderItemWithProductDetailResDto {
             return this;
         }
 
-        public OrderItemWithProductDetailResDtoBuilder category(Category category) {
+        public OrderItemWithProductDetailResDtoBuilder category(String category) {
             this.category = category;
             return this;
         }
@@ -84,7 +84,7 @@ public class OrderItemWithProductDetailResDto {
         return productName;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 

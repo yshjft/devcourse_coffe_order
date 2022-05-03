@@ -1,6 +1,6 @@
 package com.devcourse.coffeeorder.domain.order.dto.order;
 
-import com.devcourse.coffeeorder.global.exception.WrongInputException;
+import com.devcourse.coffeeorder.global.exception.badrequest.WrongInputException;
 import org.springframework.util.StringUtils;
 
 public class OrderUpdateReqDto {

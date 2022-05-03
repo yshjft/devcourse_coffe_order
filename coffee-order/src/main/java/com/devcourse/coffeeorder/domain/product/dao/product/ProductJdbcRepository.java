@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.domain.product.dao;
+package com.devcourse.coffeeorder.domain.product.dao.product;
 
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
@@ -40,9 +40,9 @@ public class ProductJdbcRepository implements ProductRepository{
     }
 
     @Override
-    public List<Product> findByCategory(Category category) {
+    public List<Product> findByCategory(String category) {
         return jdbcTemplate.query("SELECT * FROM products WHERE category = :category",
-                Collections.singletonMap("category", category.toString()), productRowMapper);
+                Collections.singletonMap("category", category), productRowMapper);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ProductJdbcRepository implements ProductRepository{
     private final RowMapper<Product> productRowMapper = ((resultSet, i) -> {
         UUID productId = toUUID(resultSet.getBytes("product_id"));
         String productName = resultSet.getString("product_name");
-        Category category = Category.valueOf(resultSet.getString("category"));
+        String category = resultSet.getString("category");
         long price = resultSet.getLong("price");
         String description = resultSet.getString("description");
         LocalDateTime createdAt = toLocalDateTime(resultSet.getTimestamp("created_at"));
@@ -100,7 +100,7 @@ public class ProductJdbcRepository implements ProductRepository{
         Map<String, Object> paramMap  = new HashMap();
         paramMap.put("productId", product.getProductId().toString().getBytes());
         paramMap.put("productName", product.getProductName());
-        paramMap.put("category", product.getCategory().toString());
+        paramMap.put("category", product.getCategory());
         paramMap.put("price", product.getPrice());
         paramMap.put("description", product.getDescription());
         paramMap.put("createdAt", product.getCreatedAt());

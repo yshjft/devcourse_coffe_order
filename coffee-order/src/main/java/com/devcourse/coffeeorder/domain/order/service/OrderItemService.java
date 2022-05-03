@@ -4,7 +4,7 @@ package com.devcourse.coffeeorder.domain.order.service;
 import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
 import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemUpdateResDto;
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
-import com.devcourse.coffeeorder.global.exception.OrderUpdateException;
+import com.devcourse.coffeeorder.global.exception.badrequest.OrderItemException;
 import com.devcourse.coffeeorder.global.exception.notfound.OrderItemNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class OrderItemService {
         OrderItem orderItem = orderItemRepository.findByOrderItemIdWithOrder(orderItemId).orElseThrow(() -> new OrderItemNotFoundException(orderItemId.toString()));
 
         if(!orderItem.getOrder().isUpdatable()) {
-            throw new OrderUpdateException(String.format("you can't update %s orderItem", orderItem.getOrder().getOrderStatus()));
+            throw new OrderItemException(String.format("you can't update %s orderItem", orderItem.getOrder().getOrderStatus()));
         }
 
         orderItem.updateQuantity(quantity);
@@ -41,7 +41,7 @@ public class OrderItemService {
         OrderItem orderItem = orderItemRepository.findByOrderItemIdWithOrder(orderItemId).orElseThrow(() -> new OrderItemNotFoundException(orderItemId.toString()));
 
         if(!orderItem.getOrder().isUpdatable()) {
-            throw new OrderUpdateException(String.format("you can't delete %s orderItem", orderItem.getOrder().getOrderStatus()));
+            throw new OrderItemException(String.format("you can't delete %s orderItem", orderItem.getOrder().getOrderStatus()));
         }
 
         orderItemRepository.delete(orderItem);

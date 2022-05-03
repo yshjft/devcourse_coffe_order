@@ -2,10 +2,9 @@ package com.devcourse.coffeeorder.domain.order.service;
 
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
-import com.devcourse.coffeeorder.domain.order.service.OrderItemService;
 import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
-import com.devcourse.coffeeorder.global.exception.OrderUpdateException;
+import com.devcourse.coffeeorder.global.exception.badrequest.OrderException;
 import com.devcourse.coffeeorder.global.exception.notfound.NotFoundException;
 import com.devcourse.coffeeorder.global.exception.notfound.OrderItemNotFoundException;
 import org.junit.jupiter.api.DisplayName;
@@ -60,10 +59,10 @@ class OrderItemServiceTest {
     @DisplayName("주문 상품 수정 OrderUpdateException 테스트")
     void testUpdateOrderUpdateException() {
         try {
-            when(orderItemRepository.findByOrderItemIdWithOrder(orderItemCanceledOrder.getOrderItemId())).thenThrow(new OrderUpdateException());
+            when(orderItemRepository.findByOrderItemIdWithOrder(orderItemCanceledOrder.getOrderItemId())).thenThrow(new OrderException());
 
             orderItemService.updateOrderItemQuantity(orderItemCanceledOrder.getOrderItemId(), 10);
-        }catch (OrderUpdateException e) {
+        }catch (OrderException e) {
             verify(orderItemRepository, never()).update(orderItemCanceledOrder);
         }
     }
@@ -97,10 +96,10 @@ class OrderItemServiceTest {
     @DisplayName("주문 상품 삭제 OrderUpdateException 테스트")
     void testDeleteOrderUpdateException() {
         try {
-            when(orderItemRepository.findByOrderItemIdWithOrder(orderItemCanceledOrder.getOrderItemId())).thenThrow(new OrderUpdateException());
+            when(orderItemRepository.findByOrderItemIdWithOrder(orderItemCanceledOrder.getOrderItemId())).thenThrow(new OrderException());
 
             orderItemService.deleteOrderItem(orderItemCanceledOrder.getOrderItemId());
-        }catch (OrderUpdateException e) {
+        }catch (OrderException e) {
             verify(orderItemRepository, never()).delete(orderItemCanceledOrder);
         }
     }

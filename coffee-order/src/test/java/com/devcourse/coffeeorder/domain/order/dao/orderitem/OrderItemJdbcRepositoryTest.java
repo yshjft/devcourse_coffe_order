@@ -1,9 +1,9 @@
 package com.devcourse.coffeeorder.domain.order.dao.orderitem;
 
 import com.devcourse.coffeeorder.domain.order.dao.order.OrderRepository;
-import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
-import com.devcourse.coffeeorder.domain.product.dao.ProductRepository;
+import com.devcourse.coffeeorder.domain.product.dao.category.CategoryRepository;
+import com.devcourse.coffeeorder.domain.product.dao.product.ProductRepository;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.ScriptResolver;
@@ -11,7 +11,6 @@ import com.wix.mysql.config.Charset;
 import com.wix.mysql.config.MysqldConfig;
 import com.wix.mysql.distribution.Version;
 import org.junit.jupiter.api.*;
-import org.mockito.internal.matchers.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,8 +22,7 @@ import static com.devcourse.coffeeorder.TestData.*;
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.samePropertyValuesAs;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -53,6 +51,9 @@ class OrderItemJdbcRepositoryTest {
     }
 
     @Autowired
+    CategoryRepository categoryRepository;
+
+    @Autowired
     OrderRepository orderRepository;
 
     @Autowired
@@ -66,6 +67,9 @@ class OrderItemJdbcRepositoryTest {
     @Order(1)
     @DisplayName("주문 상품 생성 및 조회")
     void testCreatAndFindAll() {
+        categoryRepository.create(c1);
+        categoryRepository.create(c2);
+
         productRepository.create(coffee);
         productRepository.create(cookie);
 
@@ -87,23 +91,30 @@ class OrderItemJdbcRepositoryTest {
         List<OrderItem> orderItems = orderItemRepository.findByOrderIdWithProduct(order.getOrderId());
 
         assertThat(orderItems.get(0).getOrderItemId(), is(1L));
-        assertThat(orderItems.get(0).getProduct().getCategory(), is(Category.COFFEE_BEAN_PACKAGE));
+        assertThat(orderItems.get(0).getProduct().getCategory(), is(c1.getCategory()));
         assertThat(orderItems.size(), is(2));
     }
 
     @Test
     @Order(3)
+    @DisplayName("productId를 이용한 조회")
+    void testFindByProductId() {
+        List<OrderItem> orderItemList = orderItemRepository.findByProductId(orderItem2.getProductId());
+
+        assertThat(orderItemList.size(), is(1));
+    }
+
+    @Test
+    @Order(4)
     @DisplayName("주문 상품 JOIN 조회(order)")
     void testFindByOrderItemIdWithOrder() {
-//        orderItemRepository.create(orderItem3);
-
         OrderItem orderItem = orderItemRepository.findByOrderItemIdWithOrder(2L).get();
 
         assertThat(orderItem.getOrder(), samePropertyValuesAs(order));
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @DisplayName("주문 상품 수량 수정")
     void testUpdate() {
         OrderItem orderItem = orderItemRepository.findByOrderItemIdWithOrder(2L).get();
@@ -115,8 +126,9 @@ class OrderItemJdbcRepositoryTest {
         assertThat(orderItem.getQuantity(), is(10));
     }
 
+
     @Test
-    @Order(5)
+    @Order(6)
     @DisplayName("주문 상품 삭제")
     void testDelete() {
         OrderItem orderItem = orderItemRepository.findByOrderItemIdWithOrder(2L).get();

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <title>Coffee Order Admin</title>
+</head>
+<body>
+<h1 class="header">Coffee Order Admin</h1>
+<div class="container-fluid">
+    <h2>카테고리 관리</h2>
+    <div class="row">
+        <div class="d-flex justify-content-end">
+            <a th:href="@{/products}"  class="btn btn-primary me-md-2" type="button">상품 목록</a>
+            <a th:href="@{/categories/new}"  class="btn btn-primary me-md-2" type="button">상품 카테고리 등록</a>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">상품 카테고리</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category: ${categories}" th:object="${category}" >
+            <td>
+                <a th:href="@{'/categories/'+ *{category}}" th:text="*{category}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

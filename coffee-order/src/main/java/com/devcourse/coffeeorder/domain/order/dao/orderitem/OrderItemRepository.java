@@ -23,6 +23,11 @@ public interface OrderItemRepository {
     List<OrderItem> findByOrderIdWithProduct(UUID orderId);
 
     /**
+     * productId를 이용하여 주문 상품을 조회
+     */
+    List<OrderItem> findByProductId(UUID productId);
+
+    /**
      * orderItemId를 이용하여 주문 상품과 주문에 대해 한번에 조회
      */
     Optional<OrderItem> findByOrderItemIdWithOrder(Long orderItemId);

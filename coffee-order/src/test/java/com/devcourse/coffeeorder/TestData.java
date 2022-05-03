@@ -10,10 +10,13 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class TestData {
+    public static Category c1 = new Category("coffee bean");
+    public static Category c2 = new Category("cookie");
+
     public static Product coffee = Product.builder()
             .productId(UUID.randomUUID())
             .productName("test coffee")
-            .category(Category.COFFEE_BEAN_PACKAGE)
+            .category(c1.getCategory())
             .price(2500)
             .description("best coffee!")
             .createdAt(LocalDateTime.now())
@@ -23,7 +26,7 @@ public class TestData {
     public static Product cookie = Product.builder()
             .productId(UUID.randomUUID())
             .productName("test cookie")
-            .category(Category.COOKIE)
+            .category(c2.getCategory())
             .price(1000)
             .description("best cookie!")
             .createdAt(LocalDateTime.now())

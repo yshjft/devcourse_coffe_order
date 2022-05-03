@@ -1,10 +1,12 @@
 package com.devcourse.coffeeorder.domain.product.service;
 
-import com.devcourse.coffeeorder.domain.product.dao.ProductRepository;
-import com.devcourse.coffeeorder.domain.product.dto.*;
+import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
+import com.devcourse.coffeeorder.domain.product.dao.product.ProductRepository;
+import com.devcourse.coffeeorder.domain.product.dto.product.*;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 import com.devcourse.coffeeorder.global.common.MetaData;
+import com.devcourse.coffeeorder.global.exception.badrequest.ProductException;
 import com.devcourse.coffeeorder.global.exception.notfound.ProductNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +17,11 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
+    private final OrderItemRepository orderItemRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, OrderItemRepository orderItemRepository) {
         this.productRepository = productRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     /**
@@ -53,7 +57,7 @@ public class ProductService {
     /**
      * 카테고리별 전체 상품 조회
      **/
-    public ProductsResDto findAllProductsByCategory(Category category) {
+    public ProductsResDto findAllProductsByCategory(String category) {
         List<ProductResDto> productList = productRepository.findByCategory(category).stream()
                 .map(product -> ProductResDto.builder()
                         .productId(product.getProductId())
@@ -111,6 +115,11 @@ public class ProductService {
      */
     public UUID deleteProduct(UUID productId) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId.toString()));
+
+        if(orderItemRepository.findByProductId(productId).size() > 0) {
+            throw new ProductException(String.format("can't delete product %s! because it's used by orderItem.", productId.toString()));
+        }
+
         productRepository.delete(product);
 
         return productId;
