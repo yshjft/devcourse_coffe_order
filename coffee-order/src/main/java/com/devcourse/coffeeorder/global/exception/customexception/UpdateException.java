@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.global.exception;
+package com.devcourse.coffeeorder.global.exception.customexception;
 
 public class UpdateException extends RuntimeException{
 

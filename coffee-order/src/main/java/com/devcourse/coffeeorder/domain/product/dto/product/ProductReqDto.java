@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.devcourse.coffeeorder.domain.product.entity.Product;
-import com.devcourse.coffeeorder.global.exception.badrequest.WrongInputException;
+import com.devcourse.coffeeorder.global.exception.customexception.badrequest.WrongInputException;
 import org.springframework.util.StringUtils;
 
 public class ProductReqDto {
@@ -85,16 +85,16 @@ public class ProductReqDto {
     }
 
     private void validateParams(String productName, String category, long price) {
-        if(!StringUtils.hasText(productName)) {
-            throw new WrongInputException("productName is required property!");
+        if(!StringUtils.hasText(productName) || productName.length() > 50) {
+            throw new WrongInputException("productName must not be blank! (1 <= productName <= 50)");
         }
 
-        if(category == null) {
-            throw new WrongInputException("category is required property!");
+        if(!StringUtils.hasText(category) || category.length() > 50) {
+            throw new WrongInputException("category must not be blank! (1 <= category <= 50)");
         }
 
         if(price < 0) {
-            throw new WrongInputException("price accept positive number and 0!");
+            throw new WrongInputException("price >= 0");
         }
     }
 }

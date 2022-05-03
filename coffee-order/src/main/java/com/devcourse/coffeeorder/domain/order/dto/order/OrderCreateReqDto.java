@@ -7,7 +7,7 @@ import java.util.UUID;
 import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemCreateReqDto;
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
-import com.devcourse.coffeeorder.global.exception.badrequest.WrongInputException;
+import com.devcourse.coffeeorder.global.exception.customexception.badrequest.WrongInputException;
 import org.springframework.util.StringUtils;
 
 import static com.devcourse.coffeeorder.global.util.Util.*;
@@ -90,17 +90,17 @@ public class OrderCreateReqDto {
     }
 
     private void validateParams(String email, String address, String postcode, List<OrderItemCreateReqDto> orderItems) {
-        if(!StringUtils.hasText(email)) {
-            throw new WrongInputException("email is required property!");
+        if(!StringUtils.hasText(email) || email.length() > 50) {
+            throw new WrongInputException("email must not be blank! (1 <= email <= 50)");
         }
         if(!isValidEmail(email)) {
             throw new WrongInputException("wrong email format!");
         }
-        if(!StringUtils.hasText(address)) {
-            throw new WrongInputException("address is required property!");
+        if(!StringUtils.hasText(address) || address.length() > 200) {
+            throw new WrongInputException("address must not be blank! (1 <= address <= 200)");
         }
-        if(!StringUtils.hasText(postcode)) {
-            throw new WrongInputException("postcode is required property!");
+        if(!StringUtils.hasText(postcode) || postcode.length() > 200) {
+            throw new WrongInputException("postcode must not be blank! (1 <= postcode <= 200)");
         }
         if(orderItems == null || orderItems.size() == 0) {
             throw new WrongInputException("orderItems must have at least 1 element");

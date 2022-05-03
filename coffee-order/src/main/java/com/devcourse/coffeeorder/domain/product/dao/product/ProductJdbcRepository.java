@@ -1,8 +1,7 @@
 package com.devcourse.coffeeorder.domain.product.dao.product;
 
-import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
-import com.devcourse.coffeeorder.global.exception.CreationException;
+import com.devcourse.coffeeorder.global.exception.customexception.CreationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

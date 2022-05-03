@@ -4,9 +4,11 @@ package com.devcourse.coffeeorder.domain.order.service;
 import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
 import com.devcourse.coffeeorder.domain.order.dto.orderitem.OrderItemUpdateResDto;
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
-import com.devcourse.coffeeorder.global.exception.badrequest.OrderItemException;
-import com.devcourse.coffeeorder.global.exception.notfound.OrderItemNotFoundException;
+import com.devcourse.coffeeorder.global.exception.customexception.badrequest.OrderItemException;
+import com.devcourse.coffeeorder.global.exception.customexception.notfound.OrderItemNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class OrderItemService {
@@ -42,6 +44,11 @@ public class OrderItemService {
 
         if(!orderItem.getOrder().isUpdatable()) {
             throw new OrderItemException(String.format("you can't delete %s orderItem", orderItem.getOrder().getOrderStatus()));
+        }
+
+        List<OrderItem> orderItems = orderItemRepository.findByOrderIdWithProduct(orderItem.getOrderId());
+        if(orderItems.size() == 1){
+            throw new OrderItemException(String.format("you can't delete orderItem. Because Order(%s) has only one Item.", orderItem.getOrderId().toString()));
         }
 
         orderItemRepository.delete(orderItem);

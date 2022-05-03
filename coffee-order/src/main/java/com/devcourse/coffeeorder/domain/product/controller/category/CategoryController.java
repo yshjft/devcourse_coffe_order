@@ -21,6 +21,12 @@ public class CategoryController {
         this.productService = productService;
     }
 
+    @ExceptionHandler(Exception.class)
+    public String except(Exception ex, Model model) {
+        model.addAttribute("message", ex.getMessage());
+        return "error/error";
+    }
+
     /**
      * 카테고리 생성 페이지
      */
@@ -63,7 +69,6 @@ public class CategoryController {
 
         return "category/category";
     }
-
 
     @PostMapping("/categories/delete/{categoryType}")
     public String viewCategoryPage(@PathVariable String categoryType) {

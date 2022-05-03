@@ -1,7 +1,7 @@
 package com.devcourse.coffeeorder.domain.order.dto.orderitem;
 
 import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
-import com.devcourse.coffeeorder.global.exception.badrequest.WrongInputException;
+import com.devcourse.coffeeorder.global.exception.customexception.badrequest.WrongInputException;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

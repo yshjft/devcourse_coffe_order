@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.global.exception.notfound;
+package com.devcourse.coffeeorder.global.exception.customexception.notfound;
 
 public class OrderNotFoundException extends NotFoundException{
     public OrderNotFoundException() {

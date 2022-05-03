@@ -7,7 +7,6 @@ import com.devcourse.coffeeorder.domain.product.dto.category.CategoryDto;
 import com.devcourse.coffeeorder.domain.product.dto.product.ProductReqDto;
 import com.devcourse.coffeeorder.domain.product.dto.product.ProductResDto;
 import com.devcourse.coffeeorder.domain.product.dto.product.ProductsResDto;
-import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.service.CategoryService;
 import com.devcourse.coffeeorder.domain.product.service.ProductService;
 import org.springframework.stereotype.Controller;
@@ -22,6 +21,12 @@ public class ProductController {
     public ProductController(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
         this.categoryService = categoryService;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String except(Exception ex, Model model) {
+        model.addAttribute("message", ex.getMessage());
+        return "error/error";
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.global.exception.badrequest;
+package com.devcourse.coffeeorder.global.exception.customexception.badrequest;
 
 public class OrderException extends BadRequestException {
     public OrderException() {

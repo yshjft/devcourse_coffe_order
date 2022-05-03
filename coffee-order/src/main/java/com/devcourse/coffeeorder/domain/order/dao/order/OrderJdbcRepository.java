@@ -8,8 +8,8 @@ import java.util.*;
 
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
 import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
-import com.devcourse.coffeeorder.global.exception.CreationException;
-import com.devcourse.coffeeorder.global.exception.UpdateException;
+import com.devcourse.coffeeorder.global.exception.customexception.CreationException;
+import com.devcourse.coffeeorder.global.exception.customexception.UpdateException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

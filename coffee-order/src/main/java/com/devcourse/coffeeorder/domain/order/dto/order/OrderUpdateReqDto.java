@@ -1,6 +1,6 @@
 package com.devcourse.coffeeorder.domain.order.dto.order;
 
-import com.devcourse.coffeeorder.global.exception.badrequest.WrongInputException;
+import com.devcourse.coffeeorder.global.exception.customexception.badrequest.WrongInputException;
 import org.springframework.util.StringUtils;
 
 public class OrderUpdateReqDto {
@@ -22,11 +22,11 @@ public class OrderUpdateReqDto {
     }
 
     private void validateParams(String address, String postcode) {
-        if(!StringUtils.hasText(address)) {
-            throw new WrongInputException("address is required property!");
+        if(!StringUtils.hasText(address) || address.length() > 200) {
+            throw new WrongInputException("address must not be blank! (1 <= address <= 200)");
         }
-        if(!StringUtils.hasText(postcode)) {
-            throw new WrongInputException("postcode is required property!");
+        if(!StringUtils.hasText(postcode) || postcode.length() > 200) {
+            throw new WrongInputException("postcode must not be blank! (1 <= postcode <= 200)");
         }
     }
 }

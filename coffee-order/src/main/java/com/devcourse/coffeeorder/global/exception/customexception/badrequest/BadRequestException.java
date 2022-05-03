@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.global.exception.badrequest;
+package com.devcourse.coffeeorder.global.exception.customexception.badrequest;
 
 public class BadRequestException extends RuntimeException{
     public BadRequestException() {

@@ -1,13 +1,13 @@
 package com.devcourse.coffeeorder.domain.product.service;
 
 import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
+import com.devcourse.coffeeorder.domain.product.dao.category.CategoryRepository;
 import com.devcourse.coffeeorder.domain.product.dao.product.ProductRepository;
 import com.devcourse.coffeeorder.domain.product.dto.product.*;
-import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 import com.devcourse.coffeeorder.global.common.MetaData;
-import com.devcourse.coffeeorder.global.exception.badrequest.ProductException;
-import com.devcourse.coffeeorder.global.exception.notfound.ProductNotFoundException;
+import com.devcourse.coffeeorder.global.exception.customexception.badrequest.ProductException;
+import com.devcourse.coffeeorder.global.exception.customexception.notfound.ProductNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,17 +18,25 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
     private final OrderItemRepository orderItemRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ProductService(ProductRepository productRepository, OrderItemRepository orderItemRepository) {
+    public ProductService(ProductRepository productRepository, OrderItemRepository orderItemRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.orderItemRepository = orderItemRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     /**
      * 상품 생성
      **/
     public ProductCreateResDto createProduct(ProductReqDto productReqDto) {
+        // 카테고리가 있는지 없는지 검증
+        if(categoryRepository.findByCategory(productReqDto.getCategory()).isEmpty()) {
+            throw new ProductException(String.format("%s is wrong category", productReqDto.getCategory()));
+        }
+
         Product newProduct = productRepository.create(productReqDto.toEntity());
+
         return new ProductCreateResDto(newProduct.getProductId(),
                 newProduct.getProductName(),
                 newProduct.getCreatedAt());

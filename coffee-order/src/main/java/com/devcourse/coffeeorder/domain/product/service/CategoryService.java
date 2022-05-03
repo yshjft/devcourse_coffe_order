@@ -8,7 +8,7 @@ import com.devcourse.coffeeorder.domain.product.dto.category.CategoryDto;
 import com.devcourse.coffeeorder.domain.product.dto.category.CategoryCreateResDto;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.global.common.MetaData;
-import com.devcourse.coffeeorder.global.exception.badrequest.CategoryException;
+import com.devcourse.coffeeorder.global.exception.customexception.badrequest.CategoryException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +26,7 @@ public class CategoryService {
 
     public CategoryCreateResDto createCategory(CategoryDto categoryDto) {
         if(categoryRepository.findByCategory(categoryDto.getCategory()).isPresent()) {
-            throw new CategoryException(
-                    String.format("%s is duplicate category!", categoryDto.getCategory())
-            );
+            throw new CategoryException(String.format("%s is duplicate category!", categoryDto.getCategory()));
         }
 
         Category createdCategory = categoryRepository.create(categoryDto.toEntity());

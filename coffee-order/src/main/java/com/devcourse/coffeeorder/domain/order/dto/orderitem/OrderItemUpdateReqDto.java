@@ -1,6 +1,6 @@
 package com.devcourse.coffeeorder.domain.order.dto.orderitem;
 
-import com.devcourse.coffeeorder.global.exception.badrequest.WrongInputException;
+import com.devcourse.coffeeorder.global.exception.customexception.badrequest.WrongInputException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class OrderItemUpdateReqDto {
