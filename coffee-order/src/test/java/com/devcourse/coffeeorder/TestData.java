@@ -2,7 +2,7 @@ package com.devcourse.coffeeorder;
 
 import com.devcourse.coffeeorder.domain.order.dto.OrderUpdateReqDto;
 import com.devcourse.coffeeorder.domain.order.entity.Order;
-import com.devcourse.coffeeorder.domain.orderItem.entity.OrderItem;
+import com.devcourse.coffeeorder.domain.orderitem.entity.OrderItem;
 import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;

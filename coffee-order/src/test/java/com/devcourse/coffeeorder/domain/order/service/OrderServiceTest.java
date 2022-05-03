@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.devcourse.coffeeorder.domain.order.dao.OrderRepository;
-import com.devcourse.coffeeorder.domain.orderItem.dao.OrderItemRepository;
+import com.devcourse.coffeeorder.domain.orderitem.dao.OrderItemRepository;
 import com.devcourse.coffeeorder.global.exception.notfound.OrderNotFoundException;
 import com.devcourse.coffeeorder.global.exception.OrderUpdateException;
 import org.junit.jupiter.api.DisplayName;

@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.devcourse.coffeeorder.domain.orderItem.dao.OrderItemRepository;
+import com.devcourse.coffeeorder.domain.orderitem.dao.OrderItemRepository;
 import com.devcourse.coffeeorder.domain.order.dao.OrderRepository;
 import com.devcourse.coffeeorder.domain.order.dto.*;
-import com.devcourse.coffeeorder.domain.orderItem.dto.OrderItemWithProductDetailResDto;
-import com.devcourse.coffeeorder.domain.orderItem.dto.OrderItemWithProductResDto;
+import com.devcourse.coffeeorder.domain.orderitem.dto.OrderItemWithProductDetailResDto;
+import com.devcourse.coffeeorder.domain.orderitem.dto.OrderItemWithProductResDto;
 import com.devcourse.coffeeorder.domain.order.entity.Order;
 import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
-import com.devcourse.coffeeorder.domain.orderItem.entity.OrderItem;
+import com.devcourse.coffeeorder.domain.orderitem.entity.OrderItem;
 import com.devcourse.coffeeorder.global.common.MetaData;
 import com.devcourse.coffeeorder.global.exception.notfound.OrderNotFoundException;
 import com.devcourse.coffeeorder.global.exception.OrderUpdateException;

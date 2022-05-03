@@ -1,8 +1,7 @@
-package com.devcourse.coffeeorder.domain.orderItem.dto;
+package com.devcourse.coffeeorder.domain.orderitem.dto;
 
 import com.devcourse.coffeeorder.global.exception.WrongInputException;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OrderItemUpdateReqDto {
     private int quantity;

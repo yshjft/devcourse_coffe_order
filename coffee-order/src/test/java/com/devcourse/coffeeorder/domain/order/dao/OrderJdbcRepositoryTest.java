@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.domain.order.dao.order;
+package com.devcourse.coffeeorder.domain.order.dao;
 
 import static com.devcourse.coffeeorder.TestData.*;
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;

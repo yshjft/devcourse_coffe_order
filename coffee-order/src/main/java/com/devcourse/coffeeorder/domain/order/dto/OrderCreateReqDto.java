@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.orderItem.dto.OrderItemCreateReqDto;
+import com.devcourse.coffeeorder.domain.orderitem.dto.OrderItemCreateReqDto;
 import com.devcourse.coffeeorder.domain.order.entity.Order;
 import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 import com.devcourse.coffeeorder.global.exception.WrongInputException;

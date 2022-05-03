@@ -1,10 +1,10 @@
-package com.devcourse.coffeeorder.domain.orderItem.dao;
+package com.devcourse.coffeeorder.domain.orderitem.dao;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.orderItem.entity.OrderItem;
+import com.devcourse.coffeeorder.domain.orderitem.entity.OrderItem;
 
 public interface OrderItemRepository {
     OrderItem create(OrderItem orderItem);
@@ -17,5 +17,5 @@ public interface OrderItemRepository {
 
     OrderItem update(OrderItem orderItem);
 
-    void delete(Long orderItemId);
+    void delete(OrderItem orderItem);
 }

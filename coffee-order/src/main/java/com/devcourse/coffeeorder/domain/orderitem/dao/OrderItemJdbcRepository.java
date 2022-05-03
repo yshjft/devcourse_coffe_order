@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.domain.orderItem.dao;
+package com.devcourse.coffeeorder.domain.orderitem.dao;
 
 import static com.devcourse.coffeeorder.global.util.Util.toLocalDateTime;
 
@@ -7,7 +7,7 @@ import java.util.*;
 
 import com.devcourse.coffeeorder.domain.order.entity.Order;
 import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
-import com.devcourse.coffeeorder.domain.orderItem.entity.OrderItem;
+import com.devcourse.coffeeorder.domain.orderitem.entity.OrderItem;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 import com.devcourse.coffeeorder.global.exception.CreationException;
@@ -74,8 +74,8 @@ public class OrderItemJdbcRepository implements OrderItemRepository {
     }
 
     @Override
-    public void delete(Long orderItemId) {
-
+    public void delete(OrderItem orderItem) {
+        jdbcTemplate.update("DELETE FROM order_items WHERE seq = :orderItemId", toOrderItemParamMap(orderItem));
     }
 
     private final RowMapper<OrderItem> orderItemRowMapper = ((resultSet, i) -> {

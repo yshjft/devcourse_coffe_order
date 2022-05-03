@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import com.devcourse.coffeeorder.domain.orderItem.dto.OrderItemWithProductResDto;
+import com.devcourse.coffeeorder.domain.orderitem.dto.OrderItemWithProductResDto;
 import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 

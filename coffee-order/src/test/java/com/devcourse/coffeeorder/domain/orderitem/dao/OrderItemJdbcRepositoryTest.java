@@ -1,16 +1,8 @@
-package com.devcourse.coffeeorder.domain.order.dao.orderitem;
-
-import static com.devcourse.coffeeorder.TestData.*;
-import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
-import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.*;
-
-import java.util.List;
+package com.devcourse.coffeeorder.domain.orderitem.dao;
 
 import com.devcourse.coffeeorder.domain.order.dao.OrderRepository;
-import com.devcourse.coffeeorder.domain.orderItem.dao.OrderItemRepository;
-import com.devcourse.coffeeorder.domain.orderItem.entity.OrderItem;
+import com.devcourse.coffeeorder.domain.orderitem.dao.OrderItemRepository;
+import com.devcourse.coffeeorder.domain.orderitem.entity.OrderItem;
 import com.devcourse.coffeeorder.domain.product.dao.ProductRepository;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.wix.mysql.EmbeddedMysql;
@@ -22,6 +14,16 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.List;
+import java.util.Optional;
+
+import static com.devcourse.coffeeorder.TestData.*;
+import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
+import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.samePropertyValuesAs;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -103,7 +105,7 @@ class OrderItemJdbcRepositoryTest {
 
     @Test
     @Order(4)
-    @DisplayName("주문 수량 수정")
+    @DisplayName("주문 상품 수량 수정")
     void testUpdate() {
         OrderItem orderItem = orderItemRepository.findByOrderItemIdWithOrder(orderItem3.getOrderItemId()).get();
         orderItem.updateQuantity(10);
@@ -112,5 +114,16 @@ class OrderItemJdbcRepositoryTest {
         orderItem = orderItemRepository.findByOrderItemIdWithOrder(orderItem3.getOrderItemId()).get();
 
         assertThat(orderItem.getQuantity(), is(10));
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("주문 상품 삭제")
+    void testDelete() {
+        orderItemRepository.delete(orderItem3);
+
+        Optional<OrderItem> orderItem = orderItemRepository.findByOrderItemIdWithOrder(orderItem3.getOrderItemId());
+
+        assertThat(orderItem, is(Optional.empty()));
     }
 }

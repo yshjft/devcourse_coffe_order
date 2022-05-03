@@ -1,7 +1,6 @@
-package com.devcourse.coffeeorder.domain.orderItem.dto;
+package com.devcourse.coffeeorder.domain.orderitem.dto;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class OrderItemUpdateResDto {
     private Long orderItemId;

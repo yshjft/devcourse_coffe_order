@@ -1,4 +1,4 @@
-package com.devcourse.coffeeorder.domain.orderItem.entity;
+package com.devcourse.coffeeorder.domain.orderitem.entity;
 
 import com.devcourse.coffeeorder.domain.order.entity.Order;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
