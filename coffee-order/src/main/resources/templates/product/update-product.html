@@ -28,9 +28,9 @@
             <div>
                 <select name = "category" th:value="${product.category}" id="inputCategory">
                     <option th:each="category : ${categories}"
-                            th:selected="${category == product.category}"
-                            th:value="${category}"
-                            th:text="${category}"></option>
+                            th:selected="${category.category == product.category}"
+                            th:value="${category.category}"
+                            th:text="${category.category}"></option>
                 </select>
             </div>
         </div>
@@ -43,7 +43,7 @@
             <textarea  name="description" th:text="${product.description}" rows="3" class="form-control" id="description"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">수정</button>
-        <a th:href="@{'/products/'+${product.productId}}" class="btn btn-secondary">상품 목록으로</a>
+        <a th:href="@{'/products/'+${product.productId}}" class="btn btn-secondary">상품 상세로</a>
     </form>
 </div>
 </body>

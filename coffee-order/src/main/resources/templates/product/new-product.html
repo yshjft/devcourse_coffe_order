@@ -24,8 +24,8 @@
             <div>
                 <select name = "category" id="inputCategory">
                     <option th:each="category : ${categories}"
-                            th:value="${category}"
-                            th:text="${category}"></option>
+                            th:value="${category.category}"
+                            th:text="${category.category}"></option>
                 </select>
             </div>
         </div>
