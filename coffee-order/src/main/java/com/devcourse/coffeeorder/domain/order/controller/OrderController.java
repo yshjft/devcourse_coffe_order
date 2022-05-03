@@ -22,7 +22,9 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    // 조회
+    /**
+     * 주문 조회 페이지
+     */
     @GetMapping("/orders")
     public String viewOrdersPage(Model model) {
         List<OrderResDto> acceptedOrders = orderService.getOrdersByStatus(OrderStatus.ORDER_ACCEPTED).getOrders();
@@ -40,6 +42,9 @@ public class OrderController {
         return"order/orders";
     }
 
+    /**
+     * 주문 상세 조회 페이지
+     */
     @GetMapping("/orders/{orderId}")
     public String viewOrderPage(@PathVariable UUID orderId, Model model) {
         OrderDetailResDto orderDetailResDto = orderService.getOrder(orderId);
@@ -50,7 +55,9 @@ public class OrderController {
         return "order/order";
     }
 
-    // 수정
+    /**
+     * 주문 상태 수정
+     */
     @PostMapping("/orders/status/update/{orderId}")
     public String updateOrderStatus(@PathVariable UUID orderId, @RequestParam OrderStatus orderStatus) {
         orderService.updateOrderStatus(orderId, orderStatus);

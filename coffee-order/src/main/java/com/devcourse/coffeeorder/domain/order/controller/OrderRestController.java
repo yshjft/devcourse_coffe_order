@@ -20,6 +20,9 @@ public class OrderRestController {
         this.orderService = orderService;
     }
 
+    /**
+     * 주문 생성
+     */
     @PostMapping
     public ResponseEntity<ResponseDto> createOrder(@RequestBody OrderCreateReqDto orderCreateReqDto) {
         OrderCreateResDto orderCreateResDto = orderService.createOrder(orderCreateReqDto);
@@ -31,6 +34,9 @@ public class OrderRestController {
                 .body(responseDto);
     }
 
+    /**
+     * 이메일을 통한 주문 목록 조회
+     */
     @GetMapping
     public ResponseEntity<ResponseDto> getOrdersByEmail(@RequestParam String email) {
         OrdersResDto ordersResDto = orderService.getOrdersByEmail(email);
@@ -42,6 +48,9 @@ public class OrderRestController {
                 .body(responseDto);
     }
 
+    /**
+     * 주문 상세 조회
+     */
     @GetMapping("/{orderId}")
     public ResponseEntity<ResponseDto> getOrder(@PathVariable UUID orderId) {
         OrderDetailResDto orderDetailResDto = orderService.getOrder(orderId);
@@ -53,6 +62,9 @@ public class OrderRestController {
                 .body(responseDto);
     }
 
+    /**
+     * 주문 수정
+     */
     @PutMapping("/{orderId}")
     public ResponseEntity<ResponseDto> updateOrder(@PathVariable UUID orderId, @RequestBody OrderUpdateReqDto orderUpdateReqDto) {
         OrderUpdateResDto orderUpdateResDto = orderService.updateOrder(orderId, orderUpdateReqDto);
@@ -64,7 +76,9 @@ public class OrderRestController {
                 .body(responseDto);
     }
 
-
+    /**
+     * 주문 취소
+     */
     @PutMapping("/{orderId}/cancel")
     public ResponseEntity<ResponseDto> cancelOrderStatus(@PathVariable UUID orderId) {
         OrderUpdateResDto orderUpdateResDto = orderService.cancelOrder(orderId, ORDER_CANCELLED);
@@ -75,5 +89,4 @@ public class OrderRestController {
                 .status(HttpStatus.OK)
                 .body(responseDto);
     }
-
 }

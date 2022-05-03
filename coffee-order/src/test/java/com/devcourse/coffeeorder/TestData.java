@@ -41,21 +41,11 @@ public class TestData {
             .updatedAt(LocalDateTime.now())
             .build();
 
-    public static Order order2 = Order.builder()
+    public static Order orderCancelled = Order.builder()
             .orderId(UUID.randomUUID())
             .email("tester@test.com")
             .address("경기도 용인시 ㅁㅁ ~~")
             .postcode("45678")
-            .orderStatus(OrderStatus.ORDER_ACCEPTED)
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
-            .build();
-
-    public static Order order3 = Order.builder()
-            .orderId(UUID.randomUUID())
-            .email("tester@test.com")
-            .address("경기도 용인시 처이군 ~~")
-            .postcode("12345")
             .orderStatus(OrderStatus.ORDER_CANCELLED)
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())
@@ -65,6 +55,8 @@ public class TestData {
             .orderId(order.getOrderId())
             .productId(coffee.getProductId())
             .quantity(3)
+            .order(order)
+            .product(coffee)
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())
             .build();
@@ -73,6 +65,8 @@ public class TestData {
             .orderId(order.getOrderId())
             .productId(cookie.getProductId())
             .quantity(10)
+            .order(order)
+            .product(cookie)
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())
             .build();
@@ -97,6 +91,4 @@ public class TestData {
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())
             .build();
-
-    public static OrderUpdateReqDto orderUpdateReqDto = new OrderUpdateReqDto("경기도 수원시 ", "00000");
 }

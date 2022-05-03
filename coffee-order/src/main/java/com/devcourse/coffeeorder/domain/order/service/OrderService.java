@@ -50,7 +50,7 @@ public class OrderService {
     }
 
     /**
-     * 주문 상태에 따른 주문 조회
+     * 주문 상태를 이용한 주문 조회
      */
     public OrdersResDto getOrdersByStatus(OrderStatus orderStatus) {
         List<OrderResDto> orderResDtoList = orderRepository.findByStatus(orderStatus).stream()
@@ -67,7 +67,7 @@ public class OrderService {
     }
 
     /**
-     * email에 의한 주문 조회
+     * email을 이용한 주문 조회
      */
     public OrdersResDto getOrdersByEmail(String email) {
         List<Order> orderList = orderRepository.findByEmail(email);
@@ -97,7 +97,7 @@ public class OrderService {
     }
 
     /**
-     * id를 이용한 주문 상세 조회
+     * orderId를 이용한 주문 상세 조회
      */
     public OrderDetailResDto getOrder(UUID orderId) {
         Order order = orderFindById(orderId);
@@ -127,7 +127,7 @@ public class OrderService {
     }
 
     /**
-     * 주소, 우편번호 수정
+     * 주문 수정: 주소, 우편번호 수정
      */
     public OrderUpdateResDto updateOrder(UUID orderId, OrderUpdateReqDto orderUpdateReqDto) {
         Order order = orderFindById(orderId);

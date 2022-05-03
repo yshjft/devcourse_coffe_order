@@ -9,17 +9,38 @@ import com.devcourse.coffeeorder.domain.order.entity.Order;
 import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 
 public interface OrderRepository {
+    /**
+     * 생성
+     */
     Order create(Order order);
 
+    /**
+     * 전체 조회
+     */
     List<Order> findAll();
 
+    /**
+     * orderStatus를 이용한 조회
+     */
     List<Order> findByStatus(OrderStatus orderStatus);
 
+    /**
+     * orderId를 이용한 조회
+     */
     Optional<Order> findById(UUID orderId);
 
+    /**
+     * email를 이용한 조회
+     */
     List<Order> findByEmail(String email);
 
+    /**
+     * 수정
+     */
     Order update(Order order);
 
+    /**
+     * ORDER_ACCPETED -> PREPARING_FOR_SHIPMENT
+     */
     void orderAcceptedToPreparingForShipment(LocalDateTime time);
 }

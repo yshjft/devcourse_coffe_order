@@ -83,7 +83,7 @@ public class ProductController {
         productService.updateProduct(productId, productReqDto);
         return "redirect:/products/"+productId;
     }
-    
+
     /**
      * 상품 삭제
      */

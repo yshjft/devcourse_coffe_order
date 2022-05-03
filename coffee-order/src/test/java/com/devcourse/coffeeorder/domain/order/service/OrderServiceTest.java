@@ -1,6 +1,5 @@
 package com.devcourse.coffeeorder.domain.order.service;
 
-import static com.devcourse.coffeeorder.TestData.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -8,7 +7,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.devcourse.coffeeorder.domain.order.dao.OrderRepository;
+import com.devcourse.coffeeorder.domain.order.dto.OrderUpdateReqDto;
+import com.devcourse.coffeeorder.domain.order.entity.Order;
+import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
 import com.devcourse.coffeeorder.domain.orderitem.dao.OrderItemRepository;
+import com.devcourse.coffeeorder.domain.orderitem.entity.OrderItem;
+import com.devcourse.coffeeorder.domain.product.entity.Product;
 import com.devcourse.coffeeorder.global.exception.notfound.OrderNotFoundException;
 import com.devcourse.coffeeorder.global.exception.OrderUpdateException;
 import org.junit.jupiter.api.DisplayName;
@@ -29,11 +33,31 @@ class OrderServiceTest {
     @Mock
     OrderItemRepository orderItemRepository;
 
-    @Test
-    @DisplayName("주문 상세 조회 예외 테스트")
-    void testGetOrderDetailException() {
-        UUID orderId = UUID.randomUUID();
+    private UUID orderId = UUID.randomUUID();
 
+    private Product product = Product.builder().build();
+
+    private OrderItem orderItem = OrderItem.builder()
+            .product(product)
+            .build();
+
+    private Order orderAccepted = Order.builder()
+            .orderId(UUID.randomUUID())
+            .email("test@test.com")
+            .orderStatus(OrderStatus.ORDER_ACCEPTED)
+            .build();
+
+    private Order orderCancelled = Order.builder()
+            .orderId(UUID.randomUUID())
+            .email("test@test.com")
+            .orderStatus(OrderStatus.ORDER_CANCELLED)
+            .build();
+
+    private OrderUpdateReqDto orderUpdateReqDto = new OrderUpdateReqDto("경기도 수원시 ", "00000");
+
+    @Test
+    @DisplayName("주문 상세 조회 OrderNotFoundException 테스트")
+    void testGetOrderOrderNotFoundException() {
         try {
             when(orderRepository.findById(orderId)).thenThrow(new OrderNotFoundException());
 
@@ -46,55 +70,55 @@ class OrderServiceTest {
     @Test
     @DisplayName("주문 상세 조회 테스트")
     void testGetOrderDetail() {
-        when(orderRepository.findById(order.getOrderId())).thenReturn(Optional.of(order));
-        when(orderItemRepository.findByOrderIdWithProduct(order.getOrderId())).thenReturn(Arrays.asList(orderItem3, orderItem4));
+        when(orderRepository.findById(orderAccepted.getOrderId())).thenReturn(Optional.of(orderAccepted));
+        when(orderItemRepository.findByOrderIdWithProduct(orderAccepted.getOrderId())).thenReturn(Arrays.asList(orderItem));
 
-        orderService.getOrder(order.getOrderId());
+        orderService.getOrder(orderAccepted.getOrderId());
 
-        verify(orderItemRepository).findByOrderIdWithProduct(order.getOrderId());
+        verify(orderItemRepository).findByOrderIdWithProduct(orderAccepted.getOrderId());
     }
 
     @Test
-    @DisplayName("email을 통한 주문 조회 예외 테스트")
-    void testGetOrdersByEmailException() {
+    @DisplayName("email을 이용한 주문 조회 OrderNotFoundException 테스트")
+    void testGetOrdersByEmailOrderNotFoundException() {
         try{
-            when(orderRepository.findByEmail(order.getEmail())).thenThrow(new OrderNotFoundException());
-            orderService.getOrdersByEmail(order.getEmail());
+            when(orderRepository.findByEmail(orderAccepted.getEmail())).thenThrow(new OrderNotFoundException());
+            orderService.getOrdersByEmail(orderAccepted.getEmail());
         }catch (OrderNotFoundException e) {
-            verify(orderItemRepository, never()).findByOrderIdWithProduct(order.getOrderId());
+            verify(orderItemRepository, never()).findByOrderIdWithProduct(orderAccepted.getOrderId());
         }
     }
 
     @Test
-    @DisplayName("email을 통한 주문 조회 테스트")
+    @DisplayName("email을 이용한 주문 조회 테스트")
     void testGetOrdersByEmail() {
-        when(orderRepository.findByEmail(order.getEmail())).thenReturn(Arrays.asList(order));
-        when(orderItemRepository.findByOrderIdWithProduct(order.getOrderId())).thenReturn(Arrays.asList(orderItem3, orderItem4));
+        when(orderRepository.findByEmail(orderAccepted.getEmail())).thenReturn(Arrays.asList(orderAccepted));
+        when(orderItemRepository.findByOrderIdWithProduct(orderAccepted.getOrderId())).thenReturn(Arrays.asList(orderItem));
 
-        orderService.getOrdersByEmail(order.getEmail());
+        orderService.getOrdersByEmail(orderAccepted.getEmail());
 
-        verify(orderItemRepository).findByOrderIdWithProduct(order.getOrderId());
+        verify(orderItemRepository).findByOrderIdWithProduct(orderAccepted.getOrderId());
     }
 
     @Test
-    @DisplayName("주문 수정 예외 테스트1")
-    void testUpdateOrderException1() {
+    @DisplayName("주문 수정 OrderNotFoundException 테스트")
+    void testUpdateOrderOrderNotFoundException() {
         try{
-            when(orderRepository.findById(order.getOrderId())).thenThrow(new OrderNotFoundException());
+            when(orderRepository.findById(orderAccepted.getOrderId())).thenThrow(new OrderNotFoundException());
 
-            orderService.updateOrder(order.getOrderId(), orderUpdateReqDto);
+            orderService.updateOrder(orderAccepted.getOrderId(), orderUpdateReqDto);
         }catch (OrderNotFoundException e) {
             verify(orderRepository, never()).update(any());
         }
     }
 
     @Test
-    @DisplayName("주문 수정 예외 테스트2")
-    void testUpdateOrderException2() {
+    @DisplayName("주문 수정 OrderUpdateException 테스트")
+    void testUpdateOrderOrderUpdateException() {
         try{
-            when(orderRepository.findById(order3.getOrderId())).thenReturn(Optional.of(order3));
+            when(orderRepository.findById(orderCancelled.getOrderId())).thenReturn(Optional.of(orderCancelled));
 
-            orderService.updateOrder(order3.getOrderId(), orderUpdateReqDto);
+            orderService.updateOrder(orderCancelled.getOrderId(), orderUpdateReqDto);
         }catch (OrderUpdateException e) {
             verify(orderRepository, never()).update(any());
         }
@@ -103,11 +127,11 @@ class OrderServiceTest {
     @Test
     @DisplayName("주문 수정 테스트")
     void testUpdateOrder() {
-        when(orderRepository.findById(order.getOrderId())).thenReturn(Optional.of(order));
-        when(orderRepository.update(any())).thenReturn(order);
+        when(orderRepository.findById(orderAccepted.getOrderId())).thenReturn(Optional.of(orderAccepted));
+        when(orderRepository.update(orderAccepted)).thenReturn(orderAccepted);
 
-        orderService.updateOrder(order.getOrderId(), orderUpdateReqDto);
+        orderService.updateOrder(orderAccepted.getOrderId(), orderUpdateReqDto);
+
         verify(orderRepository).update(any());
     }
-
 }
