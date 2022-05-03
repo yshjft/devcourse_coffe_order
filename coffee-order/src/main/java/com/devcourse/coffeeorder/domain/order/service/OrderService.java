@@ -48,7 +48,8 @@ public class OrderService {
         orderCreateReqDto.getOrderItems().forEach(orderItemCreateReqDto -> {
             productRepository.findById(orderItemCreateReqDto.getProductId())
                     .orElseThrow(() -> new ProductNotFoundException(String.format("can't find a product(%s)", orderItemCreateReqDto.getProductId().toString())));
-            orderItemCreateReqDto.toEntity(order.getOrderId(), order.getCreatedAt(), order.getUpdatedAt());
+
+            orderItemList.add(orderItemCreateReqDto.toEntity(order.getOrderId(), order.getCreatedAt(), order.getUpdatedAt()));
         });
 
         Order newOrder = orderRepository.create(order);
