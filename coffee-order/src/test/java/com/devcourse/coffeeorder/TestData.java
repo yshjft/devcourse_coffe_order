@@ -1,9 +1,8 @@
 package com.devcourse.coffeeorder;
 
-import com.devcourse.coffeeorder.domain.order.dto.OrderUpdateReqDto;
-import com.devcourse.coffeeorder.domain.order.entity.Order;
-import com.devcourse.coffeeorder.domain.orderitem.entity.OrderItem;
-import com.devcourse.coffeeorder.domain.order.entity.OrderStatus;
+import com.devcourse.coffeeorder.domain.order.entity.order.Order;
+import com.devcourse.coffeeorder.domain.order.entity.orderitem.OrderItem;
+import com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus;
 import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 
@@ -64,28 +63,7 @@ public class TestData {
     public static OrderItem orderItem2 = OrderItem.builder()
             .orderId(order.getOrderId())
             .productId(cookie.getProductId())
-            .quantity(10)
-            .order(order)
-            .product(cookie)
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
-            .build();
-
-    public static OrderItem orderItem3 = OrderItem.builder()
-            .orderItemId(1L)
-            .orderId(order.getOrderId())
-            .productId(coffee.getProductId())
-            .quantity(3)
-            .order(order)
-            .product(coffee)
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
-            .build();
-
-    public static OrderItem orderItem4 = OrderItem.builder()
-            .orderItemId(2L)
-            .productId(cookie.getProductId())
-            .quantity(10)
+            .quantity(5)
             .order(order)
             .product(cookie)
             .createdAt(LocalDateTime.now())
