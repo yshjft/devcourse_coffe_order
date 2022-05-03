@@ -19,21 +19,27 @@ public class ProductController {
         this.productService = productService;
     }
 
-    // 상품 생성 페이지
+    /**
+     * 상품 생성 페이지
+     */
     @GetMapping("/products/new")
     public String viewNewProductsPage(Model model) {
         model.addAttribute("categories", Category.values());
         return "product/new-product";
     }
 
-    // 상품 생성
+    /**
+     * 상품 생성
+     */
     @PostMapping("/products/new")
     public String addProduct(@ModelAttribute ProductReqDto productReqDto) {
         productService.createProduct(productReqDto);
         return "redirect:/products";
     }
 
-    // 상품 목록 조회 페이지
+    /**
+     * 상품 목록 조회 페이지
+     */
     @GetMapping("/products")
     public String viewProductsPage(@RequestParam(required = false) Category category, Model model) {
         ProductsResDto productsResDto = category == null ?
@@ -46,7 +52,9 @@ public class ProductController {
         return "product/products";
     }
 
-    // 상품 상제 조회 페이지
+    /**
+     * 상품 상제 조회 페이지
+     */
     @GetMapping("/products/{productId}")
     public String viewProductPage(@PathVariable UUID productId, Model model) {
         ProductResDto productResDto = productService.findProduct(productId);
@@ -55,7 +63,9 @@ public class ProductController {
         return "product/product";
     }
 
-    // 상품 수정 페이지
+    /**
+     * 상품 수정 페이지
+     */
     @GetMapping("/products/{productId}/update")
     public String viewProductUpdatePage(@PathVariable UUID productId, Model model) {
         ProductResDto productResDto = productService.findProduct(productId);
@@ -65,14 +75,18 @@ public class ProductController {
         return "product/update-product";
     }
 
-    // 상품 수정
+    /**
+     * 상품 수정
+     */
     @PostMapping("/products/update/{productId}")
     public String updateProduct(@PathVariable UUID productId, @ModelAttribute ProductReqDto productReqDto) {
         productService.updateProduct(productId, productReqDto);
         return "redirect:/products/"+productId;
     }
-
-    // 상품 삭제
+    
+    /**
+     * 상품 삭제
+     */
     @PostMapping("/products/delete/{productId}")
     public String deleteProduct(@PathVariable UUID productId) {
         productService.deleteProduct(productId);
