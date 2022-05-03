@@ -1,7 +1,6 @@
 package com.devcourse.coffeeorder.domain.product.dao;
 
-import static com.devcourse.coffeeorder.TestData.product;
-import static com.devcourse.coffeeorder.TestData.product2;
+import static com.devcourse.coffeeorder.TestData.*;
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static org.hamcrest.MatcherAssert.*;
@@ -55,14 +54,12 @@ class ProductJdbcRepositoryTest {
     @Autowired
     ProductRepository productRepository;
 
-
-
     @Test
     @Order(1)
-    @DisplayName("제품 생성 및 체조회 테스트")
-    void testProductCreation() {
-        productRepository.create(product);
-        productRepository.create(product2);
+    @DisplayName("제품 생성 및 전체조회 테스트")
+    void testCreateAndFindAll() {
+        productRepository.create(coffee);
+        productRepository.create(cookie);
 
         List<Product> products = productRepository.findAll();
 
@@ -73,10 +70,10 @@ class ProductJdbcRepositoryTest {
     @Order(2)
     @DisplayName("id에 의한 조회 확인")
     void testFindById() {
-        Optional<Product> retrieved = productRepository.findById(product.getProductId());
+        Optional<Product> retrieved = productRepository.findById(coffee.getProductId());
 
         assertThat(retrieved.isPresent(), is(true));
-        assertThat(retrieved.get(), samePropertyValuesAs(product));
+        assertThat(retrieved.get(), samePropertyValuesAs(coffee));
     }
 
     @Test
@@ -91,31 +88,30 @@ class ProductJdbcRepositoryTest {
     @Order(4)
     @DisplayName("카테고리에 의한 조회 확인")
     void testFindByCategory() {
-        List<Product> products = productRepository.findByCategory(Category.COFFEE_BEAN_PACKAGE);
-        assertThat(products.size(), is(2));
+        List<Product> products = productRepository.findByCategory(Category.COOKIE);
+        assertThat(products.size(), is(1));
     }
 
     @Test
     @Order(5)
     @DisplayName("수정 테스트")
     void testUpdate() {
-        Optional<Product> retrieved = productRepository.findById(product.getProductId());
-        Product retrievedProduct = retrieved.get();
+        Product retrievedProduct = productRepository.findById(coffee.getProductId()).get();
 
         retrievedProduct.updateProduct(retrievedProduct.getProductName(), retrievedProduct.getCategory(), 5000, retrievedProduct.getDescription());
         productRepository.update(retrievedProduct);
 
-        retrieved = productRepository.findById(product.getProductId());
-        assertThat(retrieved.get().getPrice(), is(5000L));
-        assertThat(retrieved.get().getUpdatedAt(), not(retrieved.get().getCreatedAt()));
+        retrievedProduct = productRepository.findById(coffee.getProductId()).get();
+        assertThat(retrievedProduct.getPrice(), is(5000L));
+        assertThat(retrievedProduct.getUpdatedAt(), not(retrievedProduct.getCreatedAt()));
     }
 
     @Test
     @Order(6)
     @DisplayName("삭제 테스트")
     void testDelete() {
-        productRepository.delete(product);
-        productRepository.delete(product2);
+        productRepository.delete(coffee);
+        productRepository.delete(cookie);
 
         List<Product> products = productRepository.findAll();
 

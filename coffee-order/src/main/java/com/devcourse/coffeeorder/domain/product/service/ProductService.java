@@ -20,7 +20,9 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    // 상품 생성
+    /**
+     * 상품 생성
+     **/
     public ProductCreateResDto createProduct(ProductReqDto productReqDto) {
         Product newProduct = productRepository.create(productReqDto.toEntity());
         return new ProductCreateResDto(newProduct.getProductId(),
@@ -28,8 +30,10 @@ public class ProductService {
                 newProduct.getCreatedAt());
     }
 
-    // 전체 조회
-    public ProductsResDto findAll() {
+    /**
+     * 전체 상품 조회
+     **/
+    public ProductsResDto findAllProducts() {
         List<ProductResDto> productList = productRepository.findAll().stream()
                 .map(product -> ProductResDto.builder()
                         .productId(product.getProductId())
@@ -46,8 +50,10 @@ public class ProductService {
         return new ProductsResDto(metaData, productList);
     }
 
-    // 카테고리 조회
-    public ProductsResDto findAllWithCategory(Category category) {
+    /**
+     * 카테고리별 전체 상품 조회
+     **/
+    public ProductsResDto findAllProductsByCategory(Category category) {
         List<ProductResDto> productList = productRepository.findByCategory(category).stream()
                 .map(product -> ProductResDto.builder()
                         .productId(product.getProductId())
@@ -65,8 +71,10 @@ public class ProductService {
         return new ProductsResDto(metaData, productList);
     }
 
-    // ID에 의한 조회
-    public ProductResDto findByProductId(UUID productId) {
+    /**
+     * ID를 통한 상품 상세 조회
+     **/
+    public ProductResDto findProduct(UUID productId) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId.toString()));
 
         return ProductResDto.builder()
@@ -80,7 +88,9 @@ public class ProductService {
                 .build();
     }
 
-    // update
+    /**
+     * 상품 수정: 상품의 카테고리, 가격, 설명을 수정
+     **/
     public ProductUpdateResDto updateProduct(UUID productId, ProductReqDto productReqDto) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId.toString()));
 
@@ -96,7 +106,9 @@ public class ProductService {
                 updatedProduct.getUpdatedAt());
     }
 
-    // delete
+    /**
+     * 상품 삭제
+     */
     public UUID deleteProduct(UUID productId) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId.toString()));
         productRepository.delete(product);

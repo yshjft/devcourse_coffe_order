@@ -28,17 +28,13 @@ class ProductServiceTest {
     @Mock
     ProductRepository productRepository;
 
-    Product product = Product.builder()
+    private UUID productId = UUID.randomUUID();
+
+    private Product product = Product.builder()
             .productId(UUID.randomUUID())
-            .productName("test coffee")
-            .category(Category.COFFEE_BEAN_PACKAGE)
-            .price(2500)
-            .description("best coffee!")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
             .build();
 
-    ProductReqDto productReqDto = ProductReqDto.builder()
+    private ProductReqDto productReqDto = ProductReqDto.builder()
             .productName("test")
             .category(Category.COFFEE_BEAN_PACKAGE)
             .price(1000)
@@ -46,10 +42,33 @@ class ProductServiceTest {
             .build();
 
     @Test
-    @DisplayName("삭제 예외 행위 테스트")
-    void testDeleteByProductIdException() {
+    @DisplayName("상품 수정 ProductNotFoundException 행위 테스트")
+    void testUpdateProductNotFoundException() {
+        try{
+            when(productRepository.findById(productId)).thenThrow(new ProductNotFoundException());
+
+            productService.updateProduct(productId, productReqDto);
+        }catch(ProductNotFoundException e) {
+            verify(productRepository, never()).update(any());
+        }
+    }
+
+    @Test
+    @DisplayName("상품 수정 테스트")
+    void testUpdateProduct() {
+        when(productRepository.findById(product.getProductId())).thenReturn(Optional.of(product));
+        when(productRepository.update(product)).thenReturn(product);
+
+        productService.updateProduct(product.getProductId(), productReqDto);
+
+        verify(productRepository).findById(product.getProductId());
+        verify(productRepository).update(product);
+    }
+
+    @Test
+    @DisplayName("상품 삭제 ProductNotFoundException 테스트")
+    void testDeleteProductNotFoundException() {
         try {
-            UUID productId = UUID.randomUUID();
             when(productRepository.findById(productId)).thenThrow(new ProductNotFoundException(productId.toString()));
 
             productService.deleteProduct(productId);
@@ -59,36 +78,13 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("삭제 행위 테스트")
-    void testDeleteByProductId() {
+    @DisplayName("상품 삭제 테스트")
+    void testDeleteProduct() {
         when(productRepository.findById(product.getProductId())).thenReturn(Optional.of(product));
 
         productService.deleteProduct(product.getProductId());
 
+        verify(productRepository).findById(product.getProductId());
         verify(productRepository).delete(product);
-    }
-
-    @Test
-    @DisplayName("수정 예외 행위 테스트")
-    void testUpdateException() {
-        try{
-            UUID productId = UUID.randomUUID();
-            when(productRepository.findById(productId)).thenThrow(new ProductNotFoundException(productId.toString()));
-
-            productService.updateProduct(productId, productReqDto);
-        }catch(ProductNotFoundException e) {
-            verify(productRepository, never()).update(any());
-        }
-    }
-
-    @Test
-    @DisplayName("수정 행위 테스트")
-    void testUpdate() {
-        when(productRepository.findById(product.getProductId())).thenReturn(Optional.of(product));
-        when(productRepository.update(product)).thenReturn(product);
-
-        productService.updateProduct(product.getProductId(), productReqDto);
-
-        verify(productRepository).update(product);
     }
 }

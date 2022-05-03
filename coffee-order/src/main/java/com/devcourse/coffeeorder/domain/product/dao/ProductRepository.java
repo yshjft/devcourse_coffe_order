@@ -8,21 +8,35 @@ import com.devcourse.coffeeorder.domain.product.entity.Category;
 import com.devcourse.coffeeorder.domain.product.entity.Product;
 
 public interface ProductRepository {
-    // 생성
+
+    /**
+     * 생성
+     */
     Product create(Product product);
 
-    // 전체 조회
+    /**
+     * 전체 조회
+     */
     List<Product> findAll();
 
-    // 카테고리로 조회
+    /**
+     * 카테고리를 이용한 조회
+     */
     List<Product> findByCategory(Category category);
 
-    // id로 조회
+    /**
+     * productId를 이용한 조회
+     */
     Optional<Product> findById(UUID productId);
 
-    // 업데이트
+
+    /**
+     * 수정
+     */
     Product update(Product product);
 
-    // 삭제
+    /**
+     * 삭제
+     */
     void delete(Product product);
 }

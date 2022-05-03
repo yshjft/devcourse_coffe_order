@@ -11,26 +11,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class TestData {
-    public static Product product = Product.builder()
-            .productId(UUID.randomUUID())
-            .productName("test coffee")
-            .category(Category.COFFEE_BEAN_PACKAGE)
-            .price(2500)
-            .description("best coffee!")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
-            .build();
-
-    public static Product product2 = Product.builder()
-            .productId(UUID.randomUUID())
-            .productName("test coffee2")
-            .category(Category.COFFEE_BEAN_PACKAGE)
-            .price(1000)
-            .description("cheap coffee!")
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
-            .build();
-
     public static Product coffee = Product.builder()
             .productId(UUID.randomUUID())
             .productName("test coffee")

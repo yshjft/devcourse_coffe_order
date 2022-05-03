@@ -18,9 +18,12 @@ public class ProductRestController {
         this.productService = productService;
     }
 
+    /**
+     * 상품 목록 조회
+     **/
     @GetMapping
     public ResponseEntity<ResponseDto> getProducts() {
-        ProductsResDto productsResDto = productService.findAll();
+        ProductsResDto productsResDto = productService.findAllProducts();
 
         ResponseDto responseDto = new ResponseDto(HttpStatus.OK.value(), "get products successfully", productsResDto);
 
