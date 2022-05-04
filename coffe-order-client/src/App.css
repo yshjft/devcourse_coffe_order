@@ -1,38 +1,72 @@
-.App {
-  text-align: center;
+.header {
+    padding: 10px;
+    font-size: 35px;
+    font-weight: bold;
+    background: #03001c;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.logo {
+    margin: 10px;
+    color: white;
+    text-decoration: none;
+}
+.logo:hover{
+    text-emphasis: none;
+    text-decoration: none;
+    color: white;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.content-area {
+    margin-top: 30px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.products {
+    width: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+.description {
+    color: silver;
+    font-size: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.search {
+    margin: 40px;
+    display: flex;
+    justify-content: center;
 }
+
+.order-list {
+    margin: 40px;
+}
+
+.main-page-order{
+    margin-bottom: 30px;
+}
+
+.main-page-order-item {
+    color: grey;
+    font-size: 15px;
+}
+
+.status{
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.order {
+    margin: 30px 0px;
+}
+.order-info-area {
+    margin-bottom: 20px;
+}
+.order-info-label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.order-input {
+    margin-right: 10px;
+}
+.order-button {
+    width: 115px;
+}
+

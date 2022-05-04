@@ -43,7 +43,7 @@ public class OrderJdbcRepository implements OrderRepository {
 
     @Override
     public List<Order> findByStatus(OrderStatus orderStatus) {
-        return jdbcTemplate.query("SELECT * FROM orders WHERE order_status = :orderStatus",
+        return jdbcTemplate.query("SELECT * FROM orders WHERE order_status = :orderStatus ORDER BY created_at",
                 Collections.singletonMap("orderStatus", orderStatus.toString()), orderRowMapper);
     }
 
@@ -61,7 +61,7 @@ public class OrderJdbcRepository implements OrderRepository {
 
     @Override
     public List<Order> findByEmail(String email) {
-        return jdbcTemplate.query("SELECT * FROM orders WHERE email = :email",
+        return jdbcTemplate.query("SELECT * FROM orders WHERE email = :email ORDER BY created_at",
                 Collections.singletonMap("email", email), orderRowMapper);
     }
 
