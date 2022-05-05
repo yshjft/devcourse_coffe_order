@@ -124,6 +124,7 @@
                 <th scope="col">Email</th>
                 <th scope="col">주문 상태</th>
                 <th scope="col">주문 생성일</th>
+                <th scope="col">주문 제거</th>
             </tr>
             </thead>
             <tbody>
@@ -134,6 +135,11 @@
                 <td th:text="*{email}"></td>
                 <td th:text="*{orderStatus.getKorName()}"></td>
                 <td th:text="*{createdAt}"></td>
+                <td>
+                    <form th:action="@{'/orders/delete/'+ *{orderId}}" method="post" class="voucher-btn-element">
+                        <button type="submit" class="btn btn-danger">주문 삭제</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>

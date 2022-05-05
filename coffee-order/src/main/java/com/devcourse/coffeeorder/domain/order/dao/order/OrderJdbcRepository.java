@@ -61,7 +61,7 @@ public class OrderJdbcRepository implements OrderRepository {
 
     @Override
     public List<Order> findByEmail(String email) {
-        return jdbcTemplate.query("SELECT * FROM orders WHERE email = :email ORDER BY created_at",
+        return jdbcTemplate.query("SELECT * FROM orders WHERE email = :email ORDER BY created_at DESC",
                 Collections.singletonMap("email", email), orderRowMapper);
     }
 
@@ -81,6 +81,12 @@ public class OrderJdbcRepository implements OrderRepository {
     public void orderAcceptedToPreparingForShipment(LocalDateTime time) {
         jdbcTemplate.update("UPDATE orders SET order_status = 'PREPARING_FOR_SHIPMENT', updated_at = NOW() WHERE created_at <= :time and order_status = 'ORDER_ACCEPTED'",
                 Collections.singletonMap("time", time));
+    }
+
+    @Override
+    public void delete(Order order) {
+        jdbcTemplate.update("DELETE FROM orders WHERE order_id = UUID_TO_BIN(:orderId)",
+                Collections.singletonMap("orderId", order.getOrderId().toString().getBytes()));
     }
 
     private final RowMapper<Order> orderRowMapper = ((resultSet, i)->{

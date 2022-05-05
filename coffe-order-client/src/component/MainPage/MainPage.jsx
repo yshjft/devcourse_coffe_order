@@ -33,29 +33,15 @@ const MainPage = () => {
                     alert("서버 에러:"+error.response.data.message)
                 }
             })
-    }, [])
 
-    useEffect(() => {
         if(query.email == null) {
-            setEmail("")
+            resetSearch()
             return
         }
 
         setEmail(query.email)
-        axios.get("http://localhost:8080/api/v1/orders",
-            {params: {email: query.email}})
-            .then(res => {
-                setOrders(res.data.result.orders)
-            })
-            .catch(error => {
-                if (error.response.status < 500) {
-                    alert(error.response.data.message)
-                } else {
-                    alert("서버 에러:"+error.response.data.message)
-                }
-            })
-
-    }, [query.email])
+        getOrderByEmail(query.email)
+    }, [])
 
     const handleAddClick = (productId) => {
         const product = products.find(product => product.productId === productId)
@@ -86,6 +72,28 @@ const MainPage = () => {
         setEmail(e.target.value)
     }
 
+    const handleSearchByEmail = () => {
+        if (email === '') delete query.email
+        else query.email = email
+
+        history.push({
+            pathname: location.pathname,
+            search: qs.stringify(query)
+        })
+
+        if(query.email == null) {
+            resetSearch()
+            return
+        }
+
+        getOrderByEmail(query.email)
+    }
+
+    const resetSearch = () => {
+        setEmail("")
+        setOrders([])
+    }
+
     const handleOrderSubmit = (order) => {
         if (items.length === 0) {
             alert("아이템을 추가해주세요!")
@@ -114,14 +122,20 @@ const MainPage = () => {
         }
     }
 
-    const handleSearchByEmail = () => {
-        if (email === '') delete query.email
-        else query.email = email
-
-        history.push({
-            pathname: location.pathname,
-            search: qs.stringify(query)
-        })
+    const getOrderByEmail = (email) => {
+        axios.get("http://localhost:8080/api/v1/orders",
+            {params: {email: email}})
+            .then(res => {
+                console.log("호출")
+                setOrders(res.data.result.orders)
+            })
+            .catch(error => {
+                if (error.response.status < 500) {
+                    alert(error.response.data.message)
+                } else {
+                    alert("서버 에러:"+error.response.data.message)
+                }
+            })
     }
 
     return (

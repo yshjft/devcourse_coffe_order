@@ -58,6 +58,7 @@ const OrderPage = () => {
     }
 
     const cancelOrder = () => {
+        console.log("취소")
         axios.put("http://localhost:8080/api/v1/orders/" + order.orderId + "/cancel")
             .then(res => {
                 alert("주문이 취소 되었습니다!")
@@ -138,7 +139,7 @@ const OrderPage = () => {
     return (
         <div className="container-fluid">
             <Order order={order} onAddressChange={handleAddressInputChange} onPostCodeChange={handlePostcodeInputChange}
-                   onUpdateOrder={updateOrder} onCancelOrde={cancelOrder}/>
+                   onUpdateOrder={updateOrder} onCancelOrder={cancelOrder}/>
             <OrderItemList total={total} orderStatus={order.orderStatus} orderItems={orderItems}
                            onQuantityChange={handleQuantityInputChange} onUpdateQuantity={updateQuantity}
                            onDeleteOrderItem={deleteOrderItem}/>

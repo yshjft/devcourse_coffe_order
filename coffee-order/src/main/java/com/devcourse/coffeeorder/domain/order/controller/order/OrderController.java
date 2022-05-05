@@ -67,4 +67,10 @@ public class OrderController {
 
         return "redirect:/orders/"+orderId;
     }
+
+    @PostMapping("/orders/delete/{orderId}")
+    public String deleteOrder(@PathVariable UUID orderId) {
+        orderService.deleteOrder(orderId);
+        return  "redirect:/orders";
+    }
 }

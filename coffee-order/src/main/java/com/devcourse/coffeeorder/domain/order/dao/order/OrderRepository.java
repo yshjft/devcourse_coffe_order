@@ -43,4 +43,10 @@ public interface OrderRepository {
      * ORDER_ACCPETED -> PREPARING_FOR_SHIPMENT
      */
     void orderAcceptedToPreparingForShipment(LocalDateTime time);
+
+
+    /**
+     * 주문 삭제
+     */
+    void delete(Order order);
 }

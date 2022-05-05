@@ -189,6 +189,16 @@ public class OrderService {
         orderRepository.orderAcceptedToPreparingForShipment(standardTime);
     }
 
+    public void deleteOrder(UUID orderId) {
+        Order order = orderFindById(orderId);
+
+        if(order.getOrderStatus() != OrderStatus.ORDER_CANCELLED) {
+            throw new OrderException("only cancelled order can be deleted");
+        }
+
+        orderRepository.delete(order);
+    }
+
     private List<OrderItem> findByOrderIdWithProduct(UUID orderId) {
         return orderItemRepository.findByOrderIdWithProduct(orderId);
     }

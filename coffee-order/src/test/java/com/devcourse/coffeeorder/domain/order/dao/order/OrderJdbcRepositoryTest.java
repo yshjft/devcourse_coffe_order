@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import com.devcourse.coffeeorder.domain.order.dao.order.OrderRepository;
 import com.devcourse.coffeeorder.domain.order.entity.order.Order;
@@ -116,5 +117,16 @@ class OrderJdbcRepositoryTest {
 
         retrievedOrder = orderRepository.findById(order.getOrderId()).get();
         assertThat(retrievedOrder.getOrderStatus(), is(OrderStatus.ORDER_ACCEPTED));
+    }
+
+    @Test
+    @org.junit.jupiter.api.Order(7)
+    @DisplayName("주문 삭제")
+    void testDeleteOrder() {
+        Order retrievedOrder = orderRepository.findById(order.getOrderId()).get();
+
+        orderRepository.delete(retrievedOrder);
+
+        assertThat(orderRepository.findById(order.getOrderId()), is(Optional.empty()));
     }
 }

@@ -162,4 +162,26 @@ class OrderServiceTest {
 
         verify(orderRepository).update(any());
     }
+
+    @Test
+    @DisplayName("주문 삭제 예외 테스트")
+    void testDeleteOrderException() {
+        try{
+            when(orderRepository.findById(orderAccepted.getOrderId())).thenReturn(Optional.of(orderAccepted));
+
+            orderService.deleteOrder(orderAccepted.getOrderId());
+        }catch (OrderException e) {
+            verify(orderRepository, never()).delete(orderAccepted);
+        }
+    }
+
+    @Test
+    @DisplayName("주문 삭제 테스트")
+    void testDeleteOrder() {
+        when(orderRepository.findById(orderCancelled.getOrderId())).thenReturn(Optional.of(orderCancelled));
+
+        orderService.deleteOrder(orderCancelled.getOrderId());
+
+        verify(orderRepository).delete(orderCancelled);
+    }
 }
