@@ -24,6 +24,9 @@ public class CategoryService {
         this.productRepository = productRepository;
     }
 
+    /**
+     * 카테고리 생성
+     */
     public CategoryCreateResDto createCategory(CategoryDto categoryDto) {
         if(categoryRepository.findByCategory(categoryDto.getCategory()).isPresent()) {
             throw new CategoryException(String.format("%s is duplicate category!", categoryDto.getCategory()));
@@ -36,6 +39,9 @@ public class CategoryService {
                 createdCategory.getCreatedAt());
     }
 
+    /**
+     * 카테고리 조회
+     */
     public CategoriesResDto getCategories() {
         List<CategoryDto> categories = categoryRepository.findAll().stream()
                 .map(category -> new CategoryDto(category.getCategory()))
@@ -46,6 +52,9 @@ public class CategoryService {
         return new CategoriesResDto(metaData, categories);
     }
 
+    /**
+     * 카테고리 상세 조회
+     */
     public CategoryDetailResDto getCategory(String categoryType) {
         Category category = categoryRepository.findByCategory(categoryType).orElseThrow(() -> new CategoryException(categoryType));
 
@@ -54,7 +63,10 @@ public class CategoryService {
                 category.getCreatedAt());
     }
 
-    public void delete(String categoryType) {
+    /**
+     * 카테고리 삭제 조회
+     */
+    public void deleteCategory(String categoryType) {
         Category category = categoryRepository.findByCategory(categoryType).orElseThrow(() -> new CategoryException(categoryType));
 
         if(productRepository.findByCategory(categoryType).size() > 0) {

@@ -72,7 +72,7 @@ public class CategoryController {
 
     @PostMapping("/categories/delete/{categoryType}")
     public String viewCategoryPage(@PathVariable String categoryType) {
-        categoryService.delete(categoryType);
+        categoryService.deleteCategory(categoryType);
 
         return "redirect:/categories";
     }
