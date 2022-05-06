@@ -1,5 +1,8 @@
 package com.devcourse.coffeeorder.domain.product.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.devcourse.coffeeorder.domain.product.dao.category.CategoryRepository;
 import com.devcourse.coffeeorder.domain.product.dao.product.ProductRepository;
 import com.devcourse.coffeeorder.domain.product.dto.category.CategoriesResDto;
@@ -11,8 +14,6 @@ import com.devcourse.coffeeorder.global.common.MetaData;
 import com.devcourse.coffeeorder.global.exception.customexception.badrequest.CategoryException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -40,7 +41,7 @@ public class CategoryService {
     }
 
     /**
-     * 카테고리 조회
+     * 카테고리 목록 조회
      */
     public CategoriesResDto getCategories() {
         List<CategoryDto> categories = categoryRepository.findAll().stream()
@@ -64,7 +65,7 @@ public class CategoryService {
     }
 
     /**
-     * 카테고리 삭제 조회
+     * 카테고리 삭제
      */
     public void deleteCategory(String categoryType) {
         Category category = categoryRepository.findByCategory(categoryType).orElseThrow(() -> new CategoryException(categoryType));

@@ -25,6 +25,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.devcourse.coffeeorder.domain.order.entity.order.OrderStatus.ORDER_CANCELLED;
+
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
@@ -59,7 +61,7 @@ public class OrderService {
     }
 
     /**
-     * 주문 상태를 이용한 주문 조회
+     * 주문 상태를 이용한 주문 목록 조회
      */
     public OrdersResDto getOrdersByStatus(OrderStatus orderStatus) {
         List<OrderResDto> orderResDtoList = orderRepository.findByStatus(orderStatus).stream()
@@ -76,7 +78,7 @@ public class OrderService {
     }
 
     /**
-     * email을 이용한 주문 조회
+     * email을 이용한 주문 내역 조회
      */
     public OrdersResDto getOrdersByEmail(String email) {
         List<Order> orderList = orderRepository.findByEmail(email);
@@ -167,14 +169,14 @@ public class OrderService {
     /**
      * 주문 취소
      */
-    public OrderUpdateResDto cancelOrder(UUID orderId, OrderStatus orderStatus) {
+    public OrderUpdateResDto cancelOrder(UUID orderId) {
         Order order = orderFindById(orderId);
 
         if(!order.isUpdatable()) {
             throw new OrderException(String.format("you can't cancel %s order", order.getOrderStatus()));
         }
 
-        order.updateOrderStatus(orderStatus);
+        order.updateOrderStatus(ORDER_CANCELLED);
         Order updatedOrder = updateOrder(order);
 
         return new OrderUpdateResDto(orderId, updatedOrder.getUpdatedAt());

@@ -1,5 +1,9 @@
 package com.devcourse.coffeeorder.domain.product.service;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 import com.devcourse.coffeeorder.domain.order.dao.orderitem.OrderItemRepository;
 import com.devcourse.coffeeorder.domain.product.dao.category.CategoryRepository;
 import com.devcourse.coffeeorder.domain.product.dao.product.ProductRepository;
@@ -9,10 +13,6 @@ import com.devcourse.coffeeorder.global.common.MetaData;
 import com.devcourse.coffeeorder.global.exception.customexception.badrequest.ProductException;
 import com.devcourse.coffeeorder.global.exception.customexception.notfound.ProductNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -30,7 +30,6 @@ public class ProductService {
      * 상품 생성
      **/
     public ProductCreateResDto createProduct(ProductReqDto productReqDto) {
-        // 카테고리가 있는지 없는지 검증
         if(categoryRepository.findByCategory(productReqDto.getCategory()).isEmpty()) {
             throw new ProductException(String.format("%s is wrong category", productReqDto.getCategory()));
         }
@@ -43,7 +42,7 @@ public class ProductService {
     }
 
     /**
-     * 전체 상품 조회
+     * 상품 목록 조회
      **/
     public ProductsResDto findAllProducts() {
         List<ProductResDto> productList = productRepository.findAll().stream()
@@ -63,7 +62,7 @@ public class ProductService {
     }
 
     /**
-     * 카테고리별 전체 상품 조회
+     * 카테고리별 상품 목록 조회
      **/
     public ProductsResDto findAllProductsByCategory(String category) {
         List<ProductResDto> productList = productRepository.findByCategory(category).stream()
@@ -101,10 +100,14 @@ public class ProductService {
     }
 
     /**
-     * 상품 수정: 상품의 카테고리, 가격, 설명을 수정
+     * 상품 수정
      **/
     public ProductUpdateResDto updateProduct(UUID productId, ProductReqDto productReqDto) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId.toString()));
+
+        if(categoryRepository.findByCategory(productReqDto.getCategory()).isEmpty()) {
+            throw new ProductException(String.format("%s is wrong category", productReqDto.getCategory()));
+        }
 
         product.updateProduct(productReqDto.getProductName(),
                 productReqDto.getCategory(),
