@@ -9,7 +9,7 @@ public class CategoryDto {
 
     public CategoryDto(String category) {
         validateParam(category);
-        this.category = category;
+        this.category = category.trim();
     }
 
     public String getCategory() {

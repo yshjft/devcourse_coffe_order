@@ -78,7 +78,7 @@ public class OrderService {
     }
 
     /**
-     * email을 이용한 주문 내역 조회
+     * email을 이용한 주문 목록 조회
      */
     public OrdersResDto getOrdersByEmail(String email) {
         List<Order> orderList = orderRepository.findByEmail(email);

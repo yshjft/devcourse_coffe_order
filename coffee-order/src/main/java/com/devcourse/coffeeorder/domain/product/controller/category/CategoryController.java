@@ -39,7 +39,7 @@ public class CategoryController {
      * 카테고리 생성
      */
     @PostMapping("/categories/new")
-    public String viewNewCategoryPage(@ModelAttribute CategoryDto categoryDto) {
+    public String addCategory(@ModelAttribute CategoryDto categoryDto) {
         categoryService.createCategory(categoryDto);
         return "redirect:/categories";
     }
@@ -70,8 +70,11 @@ public class CategoryController {
         return "category/category";
     }
 
+    /**
+     * 카테고리 삭제
+     */
     @PostMapping("/categories/delete/{categoryType}")
-    public String viewCategoryPage(@PathVariable String categoryType) {
+    public String deleteCategory(@PathVariable String categoryType) {
         categoryService.deleteCategory(categoryType);
 
         return "redirect:/categories";
